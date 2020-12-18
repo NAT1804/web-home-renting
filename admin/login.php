@@ -1,12 +1,19 @@
-<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
--->
+<?php 
+	include '../classes/adminlogin.php';
+ ?>
+<?php 
+	$class = new AdminLogin();
+ 	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+ 		$adminUser = $_POST['Username'];
+ 		$adminPass = $_POST['Password'];
+
+ 		$login_check = $class->loginAdmin($adminUser, $adminPass);
+ 	}
+ ?>
+
 <!DOCTYPE html>
 <head>
-<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | 404 :: w3layouts</title>
+<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | Login :: w3layouts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -27,13 +34,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/jquery2.0.3.min.js"></script>
 </head>
 <body>
-<!--main content start-->
-<div class="eror-w3">
-	<div class="agile-info">
-		<h3>SORRY</h3>
-		<h2>404</h2>
-		<p>An error Occurred in the Application And Your Page could not be Served.</p>
-		<a href="index.html">go home</a>
+<div class="log-w3">
+	<div class="w3layouts-main">
+		<h2>Sign In Now</h2>
+			<form action="login.php" method="post">
+				<!-- <input type="email" class="ggg" name="Email" placeholder="E-MAIL" required=""> -->
+				<span class="msg"><?php 
+
+					if (isset($login_check)) {
+						echo $login_check;
+					}
+
+				 ?></span>
+				<input type="text" class="ggg" name="Username" placeholder="USERNAME" required="">
+				<input type="password" class="ggg" name="Password" placeholder="PASSWORD" required="">
+				<span><input type="checkbox" />Remember Me</span>
+				<h6><a href="#">Forgot Password?</a></h6>
+				<div class="clearfix"></div>
+				<input type="submit" value="Sign In" name="login">
+			</form>
+			<p>Don't Have an Account ?<a href="registration.php">Create an account</a></p>
 	</div>
 </div>
 <script src="js/bootstrap.js"></script>

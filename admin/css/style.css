@@ -2387,10 +2387,15 @@ input.ggg{
     width: 32%;
 	margin-top: 8px;
 }
+.w3layouts-main .msg{
+    font-size: 20px;
+    color: #ff0000;
+    width: 100%;
+}
 .w3layouts-main h6 {
     font-size: 16px;
     float: right;
-    width: 37%;
+    width: 40%;
 	color: #fff;
     letter-spacing: 1px;
 	margin-top: 8px;
