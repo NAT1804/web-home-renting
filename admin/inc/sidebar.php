@@ -10,7 +10,29 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-                
+                <li>
+                    <a href="visitorslist.php">
+                        <i class="fa fa-user"></i>
+                        <span>Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="posterslist.php">
+                        <i class="fa fa-user"></i>
+                        <span>Người đăng bài</span>
+                    </a>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Bài đăng</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="addpost.php">Thêm bài viết</a></li>
+                        <li><a href="activepostslist.php">Danh sách bài đăng hoạt động</a></li>
+                        <li><a href="nonactivepostslist.php">Danh sách bài đăng chờ duyệt</a></li>
+                    </ul>
+                </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
