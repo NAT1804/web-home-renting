@@ -34,15 +34,11 @@
                         <li><a href="removedpostslist.php">Danh sách bài đăng bị loại</a></li>
                     </ul>
                 </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
+                <li>
+                    <a href="mail.php">
                         <i class="fa fa-envelope"></i>
                         <span>Mail</span>
                     </a>
-                    <ul class="sub">
-                        <li><a href="mail.php">Inbox</a></li>
-                        <li><a href="mail_compose.php">Compose Mail</a></li>
-                    </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">

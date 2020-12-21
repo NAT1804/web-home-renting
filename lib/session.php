@@ -31,7 +31,7 @@
 
         public static function checkSession(){
             self::init();
-            if (self::get("adminlogin")== false) {
+            if (self::get("adminlogin") == false) {
                 self::destroy();
                 header("Location: login");
             }
@@ -46,7 +46,7 @@
 
         public static function destroy(){
             session_destroy();
-            header("Location: login");
+            header("Location: login.php");
         }
         // xóa or hủy phiên làm việc
     }

@@ -1,7 +1,13 @@
-
+<?php include '../classes/signup.php'; ?>
+<?php 
+	$signup = new Signup();
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
+		$adminSignup = $signup->adminSignup($_POST);
+	}
+?>
 <!DOCTYPE html>
 <head>
-<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | Registration :: w3layouts</title>
+<title>Đăng ký</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -24,18 +30,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <div class="reg-w3">
 <div class="w3layouts-main">
-	<h2>Register Now</h2>
-		<form action="#" method="post">
-			<input type="text" class="ggg" name="Name" placeholder="NAME" required="">
-			<input type="email" class="ggg" name="Email" placeholder="E-MAIL" required="">
-			<input type="text" class="ggg" name="Phone" placeholder="PHONE" required="">
-			<input type="password" class="ggg" name="Password" placeholder="PASSWORD" required="">
-			<h4><input type="checkbox" />I agree to the Terms of Service and Privacy Policy</h4>
+	<h2>Đăng ký</h2>
+		<form action="" method="post">
+			<?php if(isset($adminSignup)) echo $adminSignup; ?>
+			<input type="text" class="ggg" name="Name" placeholder="Họ và tên" value="<?php 
+				echo isset($_POST['Name']) ?  $_POST['Name'] : ''
+			 ?>" required="">
+			<input type="email" class="ggg" name="Email" placeholder="Email" value="<?php 
+				echo (isset($_POST['Email'])) ? $_POST['Email'] : '';
+			 ?>" required="">
+			<input type="number" class="ggg" name="Phone" placeholder="Số điện thoại" value="<?php 
+				echo (isset($_POST['Phone'])) ? $_POST['Phone'] : '';
+			 ?>" required="">
+			<input type="number" class="ggg" name="IdentityCard" placeholder="Chứng minh nhân dân" value="<?php
+				echo (isset($_POST['IdentityCard'])) ? $_POST['IdentityCard'] : ''; 
+			 ?>" required="">
+			 <input type="text" class="ggg" name="Address" placeholder="Địa chỉ" value="<?php
+				echo (isset($_POST['Address'])) ? $_POST['Address'] : ''; 
+			 ?>" required="">
+			<input type="password" class="ggg" name="Password" placeholder="Mật khẩu" required="">
+			<input type="password" class="ggg" name="RePassword" placeholder="Xác nhận mật khẩu" required="">
+			<!-- <h4><input type="checkbox" />I agree to the Terms of Service and Privacy Policy</h4> -->
 			
-				<div class="clearfix"></div>
-				<input type="submit" value="submit" name="register">
+			<!-- <div class="clearfix"></div> -->
+			<input type="submit" value="Đăng ký" name="register">
 		</form>
-		<p>Already Registered.<a href="login.html">Login</a></p>
+		<p>Đã có tài khoản.<a href="login.php">Đăng nhập</a></p>
 </div>
 </div>
 <script src="js/bootstrap.js"></script>

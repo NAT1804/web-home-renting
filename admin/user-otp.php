@@ -1,13 +1,16 @@
 <?php 
-	include '../classes/adminlogin.php';
+	include '../classes/otpcode.php';
  ?>
 <?php 
-	$class = new AdminLogin();
- 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
- 		$adminEmail = $_POST['Email'];
- 		$adminPass = $_POST['Password'];
+	$email = Session::get('adminEmail');
+	if ($email == false) {
+		header('Location: login.php');
+	}
+	$otp = new OTPCode();
+ 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['check'])) {
+ 		$code = $_POST['otp'];
 
- 		$login_check = $class->loginAdmin($adminEmail, $adminPass);
+ 		$checkOTP = $otp->checkOTP($code);
  	}
  ?>
 
@@ -36,24 +39,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <div class="log-w3">
 	<div class="w3layouts-main">
-		<h2>Đăng nhập</h2>
+		<h2>Xác thực Email</h2>
 			<form action="" method="POST">
 				<?php 
-					if (isset($login_check)) {
-						echo $login_check;
+					if (isset($_SESSION['info'])) {
+						echo $_SESSION['info'];
 					}
 				?>
-				<input type="email" class="ggg" name="Email" placeholder="Email" value="<?php 
-					if (isset($_POST['Email'])) echo $_POST['Email'];
-				 ?>" required="">
-				<!-- <input type="text" class="ggg" name="Username" placeholder="USERNAME" required=""> -->
-				<input type="password" class="ggg" name="Password" placeholder="Mật khẩu" required="">
-				<!-- <span><input type="checkbox" />Ghi nhớ</span> -->
-				<h6><a href="#">Quên mật khẩu?</a></h6>
-				<div class="clearfix"></div>
-				<input type="submit" value="Đăng nhập" name="login">
+				<?php 
+					if (isset($checkOTP)) {
+						echo $checkOTP;
+					}
+				?>
+				<input type="number" class="ggg" name="otp" placeholder="Mã xác thực" required="">
+				<input type="submit" value="Xác nhận" name="check">
 			</form>
-			<p>Bạn chưa có tài khoản ?<a href="registration.php">Tạo tài khoản</a></p>
 	</div>
 </div>
 <script src="js/bootstrap.js"></script>

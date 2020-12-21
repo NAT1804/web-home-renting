@@ -1,6 +1,7 @@
 <?php 
     include 'inc/header.php';
     include 'inc/sidebar.php';
+    include '../classes/mail.php';
  ?>
 <!--main content start-->
 <section id="main-content">
@@ -11,15 +12,15 @@
             <div class="col-sm-3 com-w3ls">
                 <section class="panel">
                     <div class="panel-body">
-                        <a href="mail_compose.html"  class="btn btn-compose">
-                            Compose Mail
+                        <a href="mail_compose.php"  class="btn btn-compose">
+                            Soạn thư
                         </a>
                         <ul class="nav nav-pills nav-stacked mail-nav">
-                            <li class="active"><a href="mail.html"> <i class="fa fa-inbox"></i> Inbox  <span class="label label-danger pull-right inbox-notification">9</span></a></li>
-                            <li><a href="#"> <i class="fa fa-envelope-o"></i> Send Mail</a></li>
-                            <li><a href="#"> <i class="fa fa-certificate"></i> Important</a></li>
-                            <li><a href="#"> <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">123</span></a></a></li>
-                            <li><a href="#"> <i class="fa fa-trash-o"></i> Trash</a></li>
+                            <li class="active"><a href="mail.php"> <i class="fa fa-inbox"></i> Hộp thư đến  <span class="label label-danger pull-right inbox-notification">9</span></a></li>
+                            <li><a href="#"> <i class="fa fa-envelope-o"></i>Thư đã gửi</a></li>
+                            <li><a href="#"> <i class="fa fa-certificate"></i>Quan trọng</a></li>
+                            <li><a href="#"> <i class="fa fa-file-text-o"></i>Bản nháp<span class="label label-info pull-right inbox-notification">123</span></a></a></li>
+                            <li><a href="#"> <i class="fa fa-trash-o"></i>Thùng rác</a></li>
                         </ul>
                     </div>
                 </section>
@@ -51,10 +52,16 @@
                     </div>
                 </section>
             </div>
+            <?php 
+                $mail = new Mail();
+                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+                    $sendMail = $mail->sendMail($_POST);
+                }
+            ?>
             <div class="col-sm-9 mail-w3agile">
                 <section class="panel">
                     <header class="panel-heading wht-bg">
-                       <h4 class="gen-case"> Compose Mail
+                       <h4 class="gen-case"> Soạn thư
                            <form action="#" class="pull-right mail-src-position">
                             <div class="input-append">
                                 <input type="text" class="form-control " placeholder="Search Mail">
@@ -64,20 +71,25 @@
                     </header>
                     <div class="panel-body">
                         <div class="compose-btn pull-right">
-                            <button class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Send</button>
-                            <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
-                            <button class="btn btn-sm">Draft</button>
+                            <button class="btn btn-primary btn-sm"><i class="fa fa-check"></i>Gửi</button>
+                            <button class="btn btn-sm"><i class="fa fa-times"></i>Loại bỏ</button>
+                            <button class="btn btn-sm">Nháp</button>
                         </div>
                         <div class="compose-mail">
-                            <form role="form-horizontal" method="post">
+                            <form action="" role="form-horizontal" method="post">
+                                <div class="form-group">
+                                    <?php 
+                                        if(isset($sendMail)) echo $sendMail;
+                                    ?>
+                                </div>
                                 <div class="form-group">
                                     <label for="to" class="">To:</label>
-                                    <input type="text" tabindex="1" id="to" class="form-control">
+                                    <input name="email" type="email" tabindex="1" id="to" class="form-control" required>
 
-                                    <div class="compose-options">
+                                    <!-- <div class="compose-options">
                                         <a onclick="$(this).hide(); $('#cc').parent().removeClass('hidden'); $('#cc').focus();" href="javascript:;">Cc</a>
                                         <a onclick="$(this).hide(); $('#bcc').parent().removeClass('hidden'); $('#bcc').focus();" href="javascript:;">Bcc</a>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                                 <div class="form-group hidden">
@@ -92,15 +104,15 @@
 
                                 <div class="form-group">
                                     <label for="subject" class="">Subject:</label>
-                                    <input type="text" tabindex="1" id="subject" class="form-control">
+                                    <input name="subject" type="text" tabindex="1" id="subject" class="form-control">
                                 </div>
 
                                 <div class="compose-editor">
-                                    <textarea class="wysihtml5 form-control" rows="9"></textarea>
-                                    <input type="file" class="default">
+                                    <textarea name="content" class="wysihtml5 form-control" rows="9"></textarea>
+                                    <input name="file" type="file" class="default">
                                 </div>
                                 <div class="compose-btn">
-                                    <button class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Send</button>
+                                    <button name="submit" class="btn btn-primary btn-sm"><i class="fa fa-check"></i> Send</button>
                                     <button class="btn btn-sm"><i class="fa fa-times"></i> Discard</button>
                                     <button class="btn btn-sm">Draft</button>
                                 </div>
@@ -115,7 +127,6 @@
         <!-- page end-->
 		 </div>
 </section>
-<?php include 'inc/footer.php'; ?>
 </section>
 
 <!--main content end-->
