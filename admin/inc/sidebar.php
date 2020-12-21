@@ -7,12 +7,12 @@
                 <li>
                     <a class="active" href="index.php">
                         <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
+                        <span>Bảng điều khiển</span>
                     </a>
                 </li>
                 <li>
                     <a href="visitorslist.php">
-                        <i class="fa fa-user"></i>
+                        <i class="fa fa-users"></i>
                         <span>Khách hàng</span>
                     </a>
                 </li>
@@ -31,6 +31,17 @@
                         <li><a href="addpost.php">Thêm bài viết</a></li>
                         <li><a href="activepostslist.php">Danh sách bài đăng hoạt động</a></li>
                         <li><a href="nonactivepostslist.php">Danh sách bài đăng chờ duyệt</a></li>
+                        <li><a href="removedpostslist.php">Danh sách bài đăng bị loại</a></li>
+                    </ul>
+                </li>
+                <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-envelope"></i>
+                        <span>Mail</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="mail.php">Inbox</a></li>
+                        <li><a href="mail_compose.php">Compose Mail</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">
@@ -69,16 +80,6 @@
                         <li><a href="form_component.php">Form Elements</a></li>
                         <li><a href="form_validation.php">Form Validation</a></li>
 						<li><a href="dropzone.php">Dropzone</a></li>
-                    </ul>
-                </li>
-                <li class="sub-menu">
-                    <a href="javascript:;">
-                        <i class="fa fa-envelope"></i>
-                        <span>Mail </span>
-                    </a>
-                    <ul class="sub">
-                        <li><a href="mail.php">Inbox</a></li>
-                        <li><a href="mail_compose.php">Compose Mail</a></li>
                     </ul>
                 </li>
                 <li class="sub-menu">

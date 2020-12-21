@@ -2,12 +2,14 @@
     include 'inc/header.php';
     include 'inc/sidebar.php';
     require_once '../classes/post.php';
-    require_once '../helpers/format.php';
  ?>
  <?php 
     $post = new Post();
-    if (isset($_GET['rmPostId']) && $_GET['rmPostId'] != "") {
-        $removePost = $post->removePost($_GET['rmPostId']);
+    if (isset($_GET['accPostId']) && $_GET['accPostId'] != "") {
+        $acceptPost = $post->acceptPost($_GET['accPostId']);
+    } 
+    if (isset($_GET['delPostId']) && $_GET['delPostId'] != "") {
+        $delPost = $post->delPost($_GET['delPostId']);
     }
 ?>
 <!--main content start-->
@@ -16,7 +18,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách bài đăng đang hoạt động
+      Danh sách bài đăng bị loại
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -49,7 +51,7 @@
               </label>
             </th>
             <th>ID</th>
-            <th>Tên người đăng</th>
+            <th>Tên đăng nhập</th>
             <th>Tên bài đăng</th>
             <th>Mô tả</th>
             <th>Ngày hết hạn</th>
@@ -60,23 +62,21 @@
         </thead>
         <tbody>
         <?php 
-            $showPostsActive = $post->showPostsActive();
-            $fm = new Format();
-            for ($i=0; $i<count($showPostsActive); $i++) {
+            $showPostsRemoved = $post->showPostsRemoved();
+
+            for ($i=0; $i<count($showPostsRemoved); $i++) {
         ?>
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td><span><?php echo (int)$i + 1; ?></span></td>
-            <td><?php echo $showPostsActive[$i]['username']; ?></td>
-            <!-- <span class="text-ellipsis"></span> -->
-            <td><?php echo $showPostsActive[$i]['post_title']; ?></td>
-            <td><?php echo $fm->textShorten($showPostsActive[$i]['post_description'],50); ?></td>
-            <td><?php echo $showPostsActive[$i]['expiry_date']; ?></td>
-            <td><?php echo $showPostsActive[$i]['post_price']; ?></td>
+            <td><?php echo $showPostsRemoved[$i]['username']; ?></td>
+            <td><span class="text-ellipsis"><?php echo $showPostsRemoved[$i]['post_title']; ?></span></td>
+            <td><span class="text-ellipsis"><?php echo $showPostsRemoved[$i]['post_description']; ?></span></td>
+            <td><span><?php echo $showPostsRemoved[$i]['expiry_date']; ?></span></td>
+            <td><span><?php echo $showPostsRemoved[$i]['post_price']; ?></span></td>
             <td>
-              <a href="editpost.php?editPostId=<?php echo $showPostsActive[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Sửa</i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết này?');" href="?rmPostId=<?php echo $showPostsActive[$i]['post_id'] ?>" class="active" ui-toggle-class="">
-                <i class="fa fa-times text-danger text">Xóa</i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn bài viết hoạt động trở lại?')" href="?accPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')" href="?delPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         <?php } ?>  

@@ -21,6 +21,13 @@ include_once '../helpers/format.php';
 
             return $result;
         }
+
+        public function getNameById($districtId) {
+            $query = "SELECT district_name FROM district WHERE district_id = ?";
+            $result = $this->db->doPreparedQuery($query, array($districtId));
+
+            return $result;
+        }
  
     }
 ?>

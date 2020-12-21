@@ -13,7 +13,7 @@ Class Database extends PDO{
 
     public function __construct(){
         try {
-            $this->db = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->user, $this->pass);
+            $this->db = new PDO("mysql:host=$this->host;dbname=$this->dbname;charset=utf8", $this->user, $this->pass);
         } catch(PDOException $ex) {echo $ex->getMessage();}
     }
 

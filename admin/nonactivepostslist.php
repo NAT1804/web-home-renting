@@ -15,7 +15,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách khách hàng
+      Danh sách bài đăng đang chờ duyệt
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
