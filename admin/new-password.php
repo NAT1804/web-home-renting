@@ -2,18 +2,22 @@
 	include '../classes/adminlogin.php';
  ?>
 <?php 
+	$email = Session::get('adminEmail');
+	if($email == false){
+	  header('Location: login.php');
+	}
 	$class = new AdminLogin();
- 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
- 		$adminEmail = $_POST['Email'];
- 		$adminPass = $_POST['Password'];
+ 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['change-pass'])) {
+ 		$password = $_POST['Password'];
+ 		$repassword = $_POST['RePassword'];
 
- 		$login_check = $class->loginAdmin($adminEmail, $adminPass);
+ 		$changePassword = $class->changePassword($password, $repassword);
  	}
  ?>
 
 <!DOCTYPE html>
 <head>
-<title>Đăng nhập</title>
+<title>Đổi mật khẩu</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -42,21 +46,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					if(isset($_SESSION['info'])) echo $_SESSION['info'];
 				?>
 				<?php 
-					if (isset($login_check)) {
-						echo $login_check;
+					if (isset($changePassword)) {
+						echo $changePassword;
 					}
 				?>
-				<input type="email" class="ggg" name="Email" placeholder="Email" value="<?php 
-					if (isset($_POST['Email'])) echo $_POST['Email'];
-				 ?>" required="">
-				<!-- <input type="text" class="ggg" name="Username" placeholder="USERNAME" required=""> -->
-				<input type="password" class="ggg" name="Password" placeholder="Mật khẩu" required="">
-				<!-- <span><input type="checkbox" />Ghi nhớ</span> -->
-				<h6><a href="forgot-password.php">Quên mật khẩu?</a></h6>
-				<div class="clearfix"></div>
-				<input type="submit" value="Đăng nhập" name="login">
+				<input type="password" class="ggg" name="Password" placeholder="Mật khẩu mới" required="">
+				<input type="password" class="ggg" name="RePassword" placeholder="Xác nhận mật khẩu" required="">
+				<input type="submit" value="Xác nhận" name="change-pass">
 			</form>
-			<p>Bạn chưa có tài khoản ?<a href="registration.php">Tạo tài khoản</a></p>
 	</div>
 </div>
 <script src="js/bootstrap.js"></script>

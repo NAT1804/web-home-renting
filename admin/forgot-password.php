@@ -3,11 +3,10 @@
  ?>
 <?php 
 	$class = new AdminLogin();
- 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
+ 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
  		$adminEmail = $_POST['Email'];
- 		$adminPass = $_POST['Password'];
 
- 		$login_check = $class->loginAdmin($adminEmail, $adminPass);
+ 		$checkEmail = $class->checkEmail($adminEmail);
  	}
  ?>
 
@@ -39,15 +38,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<h2>Quên mật khẩu</h2>
 			<form action="" method="POST">
 				<?php 
-					if (isset($login_check)) {
-						echo $login_check;
+					if (isset($checkEmail)) {
+						echo $checkEmail;
 					}
 				?>
 				<input type="email" class="ggg" name="Email" placeholder="Email" value="<?php 
 					if (isset($_POST['Email'])) echo $_POST['Email'];
 				 ?>" required="">
-				<input type="submit" value="Xác nhận" name="login">
+				<input type="submit" value="Xác nhận" name="submit">
 			</form>
+			<p>Trở về trang <a href="login.php">Đăng nhập</a></p>
 	</div>
 </div>
 <script src="js/bootstrap.js"></script>

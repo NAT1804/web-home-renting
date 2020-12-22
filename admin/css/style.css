@@ -2355,7 +2355,7 @@ ul.inbox-pagination li {
 }
 /*-- gallery --*/
 .w3layouts-main h2 {
-	color: #9f4787;
+	color: #d94c7e;
     font-size: 29px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -2365,8 +2365,9 @@ ul.inbox-pagination li {
 .w3layouts-main {
     width: 30%;
     margin:5em auto;
-    /*background:rgba(171, 119, 157, 0.27);*/
-    background: rgb(230, 250, 255, 0.27);
+    background:rgba(171, 119, 157, 0.7);
+    /*background: rgba(71,112,122,0.57);*/
+    /*background: #ffffff;*/
     padding: 42px 35px;
     border: solid 1px #ffffff;
     border-radius: 10px;
@@ -3153,10 +3154,24 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 }
 }
 
-.success {
+#success {
     color: green;
+    width: 100%; 
+    font-size: 18px; 
+    background-color: #ccffcc; 
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #fff;
+    font-family: 'Poppins', sans-serif;
 }
 
-.error {
+#error {
     color: red;
+    width: 100%; 
+    font-size: 18px; 
+    background-color: #ffe6e6;
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #fff;
+    font-family: 'Poppins', sans-serif;
 }
