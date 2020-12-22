@@ -45,7 +45,7 @@
             <div class="header d-lg-flex justify-content-between align-items-center py-2 px-sm-2 px-1">
                 <!-- logo -->
                 <div id="logo">
-                    <h1><a href="index.html"><span class="text-bl">Easy</span>Accomod</a></h1>
+                    <h1><a href="index.php"><span class="text-bl">Easy</span>Accomod</a></h1>
                 </div>
                 <!-- //logo -->
                 <!-- nav -->
@@ -58,8 +58,29 @@
                             <li><a href="#">Advanced Search</li>
                             <li><a href="#blog">Blog</a></li>
                             <li><a href="#contact">Contact Us</a></li>
-                            <li><a href="login.php">Login</a></li>
-                            <li><a href="register.php">Register</a></li>
+                            <?php
+                                if (isset($_SESSION["UserId"]))
+                                {
+                                    $name = $_SESSION["Username"] ;
+                                    echo '<li>' ;
+                                    echo '<a href="#">Hello, ' .$name. '<span class="fa fa-angle-down" aria-hidden="true"></span></a>';
+                                    echo '<input type="checkbox" id="drop-2" />';
+                                    echo '<ul>
+                                    <li><a href="#" class="drop-text">News</a></li>';
+                                    if ($_SESSION["Role"] == 1)
+                                    {
+                                        echo '<li><a href="upload_post.php" class="drop-text">Upload Post</a></li>';
+                                    }
+                                    echo '<li><a href="logout.php" class="drop-text">Logout</a></li>' ;
+                                    echo '</li>' ;
+                                }
+                                else 
+                                {
+                                    echo '<li><a href="login.php">Login</a></li>
+                                          <li><a href="register.php">Register</a></li>' ;
+                                }
+                            ?>
+
                         </ul>
                     </nav>
                 </div>

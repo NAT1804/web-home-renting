@@ -1,4 +1,10 @@
 <?php
+    session_start() ;
+    //echo $_SESSION["Role"] ;
+    include "lib/connection.php" ;
+?>
+
+<?php
     include "inc/header.php";
 ?>
     <!-- //header -->
