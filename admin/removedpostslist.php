@@ -2,6 +2,7 @@
     include 'inc/header.php';
     include 'inc/sidebar.php';
     require_once '../classes/post.php';
+    require_once '../helpers/format.php';
  ?>
  <?php 
     $post = new Post();
@@ -51,7 +52,8 @@
               </label>
             </th>
             <th>ID</th>
-            <th>Tên đăng nhập</th>
+            <th>Người đăng</th>
+            <th>Mã bài đăng</th>
             <th>Tên bài đăng</th>
             <th>Mô tả</th>
             <th>Ngày hết hạn</th>
@@ -63,15 +65,16 @@
         <tbody>
         <?php 
             $showPostsRemoved = $post->showPostsRemoved();
-
+            $fm = new Format();
             for ($i=0; $i<count($showPostsRemoved); $i++) {
         ?>
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td><span><?php echo (int)$i + 1; ?></span></td>
             <td><?php echo $showPostsRemoved[$i]['username']; ?></td>
-            <td><span class="text-ellipsis"><?php echo $showPostsRemoved[$i]['post_title']; ?></span></td>
-            <td><span class="text-ellipsis"><?php echo $showPostsRemoved[$i]['post_description']; ?></span></td>
+            <td><?php echo '#'.$showPostsRemoved[$i]['post_id']; ?></td>
+            <td><?php echo $showPostsRemoved[$i]['post_title']; ?></td>
+            <td><?php echo $fm->textShorten($showPostsRemoved[$i]['post_description'], 50); ?></td>
             <td><span><?php echo $showPostsRemoved[$i]['expiry_date']; ?></span></td>
             <td><span><?php echo $showPostsRemoved[$i]['post_price']; ?></span></td>
             <td>

@@ -114,12 +114,12 @@ require "../config/config-cloud.php";
                 $price == "" ||
                 $description == ""
                 ) {
-                $alert = "<span class='error'>Các trường không được rỗng</span>";
+                $alert = "<span id='error'>Các trường không được rỗng</span>";
                 return $alert;
             }
 
             if ($totalImage < 3) {
-                $alert = "<span class='error'>Chưa cung cấp đủ hình ảnh (ít nhất 3 ảnh)</span>";
+                $alert = "<span id='error'>Chưa cung cấp đủ hình ảnh (ít nhất 3 ảnh)</span>";
                 return $alert;
             }
             $accId = Session::get('adminId');
@@ -127,7 +127,7 @@ require "../config/config-cloud.php";
             $result = $this->db->doPreparedSql($query, array($accId,$title,$description,$price,1,$time));
 
             if($result == 0) {
-                $alert = "<span class='error'>Thêm bài đăng bị lỗi</span>";
+                $alert = "<span id='error'>Thêm bài đăng bị lỗi</span>";
                 return $alert;
             }
 
@@ -136,14 +136,14 @@ require "../config/config-cloud.php";
             if(!empty($result2)) {
                 $postId = $result2[0]['post_id'];
             } else {
-                $alert = "<span class='error'>Thêm bài đăng bị lỗi</span>";
+                $alert = "<span id='error'>Thêm bài đăng bị lỗi</span>";
                 return $alert;
             }
 
             $query3 = "INSERT INTO motel(post_id,house_number,street,province_id,district_id,close_place,number_of_rooms,area,price,owner,bath_type,water_heater,kitchen,air_conditioner,balcony,electric_water,electric_price,water_price,style_id,number_image) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $result3 = $this->db->doPreparedSql($query3, array((int)$postId,$numberhouse,$street,$city,$district,$close,$numberroom,$area,$rentprice,$owner,$bath,$waterheater,$kitchen,$air,$balcony,$elecwater,$elec,$water,$style,$totalImage));
             if($result3 == 0) {
-                $alert = "<span class='error'>Thêm bài đăng bị lỗi</span>";
+                $alert = "<span id='error'>Thêm bài đăng bị lỗi</span>";
                 return $alert;
             }
 
@@ -155,7 +155,7 @@ require "../config/config-cloud.php";
                 \Cloudinary\Uploader::upload($file_tmp, array("public_id" => $name, "folder" => $folder));
             }
 
-            $alert = "<span class='success'>Thêm bài đăng hợp lệ</span>";
+            $alert = "<span id='success'>Thêm bài đăng hợp lệ</span>";
             $_POST = array();
             return $alert;
 
@@ -210,7 +210,7 @@ require "../config/config-cloud.php";
                 $price == "" ||
                 $description == ""
                 ) {
-                $alert = "<span class='error'>Các trường không được rỗng</span>";
+                $alert = "<span id='error'>Các trường không được rỗng</span>";
                 return $alert;
             }
 
@@ -221,7 +221,7 @@ require "../config/config-cloud.php";
                 $result = $this->db->doPreparedSql($query, array($title,$description,$postId));
 
                 if($result == 0) {
-                    $alert = "<span class='error'>".$title." ".$description."</span>";
+                    $alert = "<span id='error'>".$title." ".$description."</span>";
                     return $alert;
                 }
             }
@@ -250,7 +250,7 @@ require "../config/config-cloud.php";
                 $query2 = "UPDATE motel SET house_number = ?, street = ?, province_id = ?, district_id = ?, close_place = ?, number_of_rooms = ?, area = ?, price = ?, owner = ?, bath_type = ?, water_heater = ?, kitchen = ?, air_conditioner = ?, balcony = ?, electric_water = ?, electric_price = ?, water_price = ?, style_id = ?, number_image = ? WHERE post_id = ?";
                 $result2 = $this->db->doPreparedSql($query2, array($numberhouse, $street, $city, $district, $close, $numberroom, $area, $rentprice, $owner, $bath, $waterheater, $kitchen, $air, $balcony, $elecwater, $elec, $water, $style, $newTotalImage, $postId));
                 if($result2 == 0) {
-                    $alert = "<span class='error'>Sửa bài đăng thất bại 2</span>";
+                    $alert = "<span id='error'>Sửa bài đăng thất bại 2</span>";
                     return $alert;
                 }
             }
@@ -267,7 +267,7 @@ require "../config/config-cloud.php";
                 }
             }
 
-            $alert = "<span class='success'>Sửa bài đăng thành công</span>";
+            $alert = "<span id='success'>Sửa bài đăng thành công</span>";
             return $alert;
         }   
     }

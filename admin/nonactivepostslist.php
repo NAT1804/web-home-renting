@@ -48,7 +48,8 @@
               </label>
             </th>
             <th>ID</th>
-            <th>Tên đăng nhập</th>
+            <th>Người đăng</th>
+            <th>Mã bài đăng</th>
             <th>Tên bài đăng</th>
             <th>Mô tả</th>
             <th>Ngày đăng bài</th>
