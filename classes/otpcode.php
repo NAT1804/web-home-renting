@@ -34,6 +34,8 @@
 				if (!empty($resultUpdate)) {
 					Session::set('adminEmail', $result[0]['email']);
 					Session::set('adminUser', $result[0]['username']);
+					$info = "<span id='success'>Bạn đã xác thực thành công Email - ".$result[0]['email']."</span>";
+					Session::set('info', $info);
 					header('Location: index.php');
 					exit();
 				} else {

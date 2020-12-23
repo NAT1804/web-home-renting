@@ -12,14 +12,14 @@
                 <section class="panel">
                     <div class="panel-body">
                         <a href="mail_compose.php"  class="btn btn-compose">
-                            Compose Mail
+                            Soạn thư
                         </a>
                         <ul class="nav nav-pills nav-stacked mail-nav">
-                            <li class="active"><a href="mail.php"> <i class="fa fa-inbox"></i> Inbox  <span class="label label-danger pull-right inbox-notification">9</span></a></li>
-                            <li><a href="#"> <i class="fa fa-envelope-o"></i> Send Mail</a></li>
-                            <li><a href="#"> <i class="fa fa-certificate"></i> Important</a></li>
-                            <li><a href="#"> <i class="fa fa-file-text-o"></i> Drafts <span class="label label-info pull-right inbox-notification">123</span></a></a></li>
-                            <li><a href="#"> <i class="fa fa-trash-o"></i> Trash</a></li>
+                            <li class="active"><a href="inbox.php"> <i class="fa fa-inbox"></i>Hộp thư đến<span class="label label-danger pull-right inbox-notification">9</span></a></li>
+                            <li><a href="#"> <i class="fa fa-envelope-o"></i>Thư đã gửi</a></li>
+                            <li><a href="#"> <i class="fa fa-certificate"></i>Quan trọng</a></li>
+                            <li><a href="#"> <i class="fa fa-file-text-o"></i>Bản nháp<span class="label label-info pull-right inbox-notification">123</span></a></a></li>
+                            <li><a href="#"> <i class="fa fa-trash-o"></i>Thùng rác</a></li>
                         </ul>
                     </div>
                 </section>
@@ -347,7 +347,6 @@
         <!-- page end-->
         </div>
 </section>
-<?php include 'inc/footer.php'; ?>
 </section>
 <!--main content end-->
 </section>

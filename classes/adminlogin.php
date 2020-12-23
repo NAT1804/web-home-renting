@@ -1,8 +1,9 @@
 <?php 
 	include '../lib/session.php';
 	Session::checkLogin();
-	include '../lib/database.php';
-	include '../helpers/format.php';
+	include_once '../lib/database.php';
+	include_once '../helpers/format.php';
+	include 'mail.php';
 ?>
 
 <?php 
@@ -10,11 +11,13 @@
 	{
 		private $db;
 		private $fm;
+		private $mail;
 		
 		public function __construct()
 		{
 			$this->db = new Database();
 			$this->fm = new Format();
+			$this->mail = new Mail();
 		}
 
 		public function loginAdmin($adminEmail, $adminPass){
@@ -51,6 +54,7 @@
 					} else {
 						$info = "<span id='success'>Bạn chưa xác thực email - ".$adminEmail."</span>";
 						Session::set('info', $info);
+						Session::set('adminEmail', $adminEmail);
 						header('Location: user-otp.php');
 						exit();
 					}
@@ -76,18 +80,18 @@
 
 				if (!empty($resultUpdate)) {
 					$subject = "Password Reset Code";
-	                $message = "Your password reset code is $code";
-	                $sender = "From: michigo2802@gmail.com";
-	                if(mail($email, $subject, $message, $sender)){
-	                    $info = "<span id='success'>We've sent a passwrod reset otp to your email - $email</span>";
-	                    $_SESSION['info'] = $info;
-	                    $_SESSION['adminEmail'] = $email;
-	                    header('Location: ../admin/reset-code.php');
-	                    exit();
-	                }else{
-	                    $alert = "<span id='error'>Lỗi khi gửi code.</span>";
-						return $alert;
-	                }
+					$content = "Your password reset code is $code";
+					$sendMail = $this->mail->sendMail($email, $subject, $content);
+
+					if ($sendMail['status'] == "false") return $sendMail['alert'];
+					if ($sendMail['status'] == "true") {
+						$info = "<span id='success'>Chúng tôi đã gửi mã xác thực đến email của bạn - $email</span>";
+		                Session::set('info', $info);
+		                Session::set('adminEmail', $email);
+		                header('Location: ../admin/reset-code.php');
+		                exit();
+					}
+					
 				} else {
 					$alert = "<span class='error' style='width: 100%; color: red; font-size: 18px; background-color: #ffe6e6; text-align: center;'>Lỗi khi làm mới code.</span>";
 					return $alert;

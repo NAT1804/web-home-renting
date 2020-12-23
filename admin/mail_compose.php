@@ -16,7 +16,7 @@
                             Soạn thư
                         </a>
                         <ul class="nav nav-pills nav-stacked mail-nav">
-                            <li class="active"><a href="mail.php"> <i class="fa fa-inbox"></i> Hộp thư đến  <span class="label label-danger pull-right inbox-notification">9</span></a></li>
+                            <li class="active"><a href="inbox.php"> <i class="fa fa-inbox"></i>Hộp thư đến<span class="label label-danger pull-right inbox-notification">9</span></a></li>
                             <li><a href="#"> <i class="fa fa-envelope-o"></i>Thư đã gửi</a></li>
                             <li><a href="#"> <i class="fa fa-certificate"></i>Quan trọng</a></li>
                             <li><a href="#"> <i class="fa fa-file-text-o"></i>Bản nháp<span class="label label-info pull-right inbox-notification">123</span></a></a></li>
@@ -55,7 +55,10 @@
             <?php 
                 $mail = new Mail();
                 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-                    $sendMail = $mail->sendMail($_POST);
+                    $email = $_POST['email'];
+                    $subject = $_POST['subject'];
+                    $content = $_POST['content'];
+                    $sendMail = $mail->sendMail($email, $subject, $content);
                 }
             ?>
             <div class="col-sm-9 mail-w3agile">
@@ -79,7 +82,7 @@
                             <form action="" role="form-horizontal" method="post">
                                 <div class="form-group">
                                     <?php 
-                                        if(isset($sendMail)) echo $sendMail;
+                                        if(isset($sendMail)) echo $sendMail['alert'];
                                     ?>
                                 </div>
                                 <div class="form-group">

@@ -35,7 +35,13 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="mail.php">
+                    <a href="adminslist.php">
+                        <i class="fa fa-user-md"></i>
+                        <span>Quản trị viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="inbox.php">
                         <i class="fa fa-envelope"></i>
                         <span>Mail</span>
                     </a>

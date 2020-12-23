@@ -1,8 +1,9 @@
 <?php 
 	include '../lib/session.php';
 	Session::checkLogin();
-	include '../lib/database.php';
-	include '../helpers/format.php';
+	include_once '../lib/database.php';
+	include_once '../helpers/format.php';
+	include 'mail.php';
 ?>
 
 <?php 
@@ -11,11 +12,13 @@
 
 		private $db;
 		private $fm;
+		private $mail;
 
 		public function __construct()
 		{
 			$this->db = new Database();
 			$this->fm = new Format();
+			$this->mail = new Mail();
 		}
 
 		public function adminSignup($data) {
@@ -64,43 +67,21 @@
 
 				if (!empty($result)) {
 					$subject = "Email Verification Code";
-		            $message = "Your verification code is $code";
-		            $sender = "From: michigo2802@gmail.com";
-		            if(mail($email, $subject, $message, $sender)){
-		                $info = "<span id='success'>We've sent a verification code to your email - $email</span>";
+		            $content = "Your verification code is $code";
+					$sendMail = $this->mail->sendMail($email, $subject, $content);
+
+					if ($sendMail['status'] == "false") return $sendMail['alert'];
+					if ($sendMail['status'] == "true") {
+						$info = "<span id='success'>We've sent a verification code to your email - $email</span>";
 		                Session::set('info', $info);
 		                Session::set('adminEmail', $email);
 		                Session::set('adminPass', $password);
 		                header('Location: user-otp.php');
-		                exit();		        
-		            }else{
-		               $alert = "<span id='error'>Lỗi khi gửi mail.</span>";
-						return $alert;
-		            }
+		                exit();
+					}
+
 				} else {
 					$alert = "<span id='error'>Lỗi khi thêm dữ liệu vào database.</span>";
-					return $alert;
-				}
-
-				if (md5($adminPass) == $check[0]['password']) {
-					if ($check[0]['status'] == "verified") {
-						if ($check[0]['role'] == 0) {
-							Session::set('adminlogin', true);
-							Session::set('adminId', $check[0]['account_id']);
-							Session::set('adminUsername', $check[0]['username']);
-							Session::set('adminEmail', $check[0]['username']);
-							Session::set('adminPass', $check[0]['password']);
-							header('Location: index.php');
-						} else {
-							$alert = "<span id='error'>Bạn không có quyền đăng nhập</span>";
-							return $alert;
-						}
-					} else {
-						$alert = "<span id='error'>Bạn chưa xác thực email - ".$adminEmail."</span>";
-						return $alert;
-					}
-				} else {
-					$alert = "<span id='error'>Bạn nhập sai Email hoặc Password</span>";
 					return $alert;
 				}
 			} else {
