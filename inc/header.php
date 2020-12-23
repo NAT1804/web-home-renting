@@ -27,7 +27,7 @@
     <link href="public/css/font-awesome.min.css" rel="stylesheet">
     <!-- Font-Awesome-Icons-CSS -->
     <!-- //Custom-Files -->
-
+    <link href="public/css/custom-style.css" rel='stylesheet' type='text/css' />
     <!-- Web-Fonts -->
     <link
         href="//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"

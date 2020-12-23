@@ -1,0 +1,24 @@
+.your-img {
+    height: 200px; 
+    width: auto; 
+    max-width: 320px; 
+    max-height: 300px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+}
+.img-post {
+    margin: auto;
+}
+.post-box{
+    margin: 20px;
+
+}
+.detail-box{
+    margin: auto;
+}
+.img-post {
+    margin-top:10px;
+}
+.comment-box{
+    padding-bottom: 5px;
+}
