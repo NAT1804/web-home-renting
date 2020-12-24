@@ -16,11 +16,15 @@
                         <span>Khách hàng</span>
                     </a>
                 </li>
-                <li>
-                    <a href="posterslist.php">
+                <li class="sub-menu">
+                    <a href="javascript:;">
                         <i class="fa fa-user"></i>
                         <span>Người đăng bài</span>
                     </a>
+                    <ul class="sub">
+                        <li><a href="posterslist.php">Danh sách người đăng hoạt động</a></li>
+                        <li><a href="nonactiveposterslist.php">Danh sách người đăng đang chờ duyệt</a></li>
+                    </ul>
                 </li>
                 <li class="sub-menu">
                     <a href="javascript:;">
@@ -43,7 +47,7 @@
                 <li>
                     <a href="inbox.php">
                         <i class="fa fa-envelope"></i>
-                        <span>Mail</span>
+                        <span>Thông báo</span>
                     </a>
                 </li>
                 <li class="sub-menu">

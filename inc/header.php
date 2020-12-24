@@ -1,3 +1,19 @@
+<?php 
+    include "lib/session.php";
+    Session::init(); 
+?>
+<?php 
+    spl_autoload_register(function($className) {
+        include_once "classes/".$className.'.php';
+    });
+    include_once "lib/database.php";
+    include_once "helpers/format.php";
+?>
+<?php 
+    if(isset($_GET['action']) && $_GET['action'] == 'logout') {
+        Session::destroy();
+    }
+?>
 <!DOCTYPE HTML>
 <html lang="zxx">
 
@@ -24,7 +40,7 @@
     <!-- Bootstrap-Core-CSS -->
     <link href="public/css/style.css" rel='stylesheet' type='text/css' />
     <!-- Style-CSS -->
-    <link href="public/css/font-awesome.min.css" rel="stylesheet">
+    <link href="public/css/font-awesome.css" rel="stylesheet">
     <!-- Font-Awesome-Icons-CSS -->
     <!-- //Custom-Files -->
     <link href="public/css/custom-style.css" rel='stylesheet' type='text/css' />
@@ -59,28 +75,31 @@
                             <li><a href="#blog">Blog</a></li>
                             <li><a href="#contact">Contact Us</a></li>
                             <?php
-                                if (isset($_SESSION["UserId"]))
+                                if (isset($_SESSION["userId"]))
                                 {
-                                    $name = $_SESSION["Username"] ;
-                                    echo '<li>' ;
-                                    echo '<a href="#">Hello, ' .$name. '<span class="fa fa-angle-down" aria-hidden="true"></span></a>';
-                                    echo '<input type="checkbox" id="drop-2" />';
-                                    echo '<ul>
-                                    <li><a href="#" class="drop-text">News</a></li>';
-                                    if ($_SESSION["Role"] == 1)
-                                    {
-                                        echo '<li><a href="upload_post.php" class="drop-text">Upload Post</a></li>';
-                                    }
-                                    echo '<li><a href="logout.php" class="drop-text">Logout</a></li>' ;
-                                    echo '</li>' ;
-                                }
-                                else 
-                                {
-                                    echo '<li><a href="login.php">Login</a></li>
-                                          <li><a href="register.php">Register</a></li>' ;
-                                }
+                                    $name = $_SESSION["username"];
                             ?>
-
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                        <!-- <img alt="" src="public/images/3.png" style="height: 20%; width: 20%; border-radius: 5px"> -->
+                                        <span class="username"><?php echo $name; ?></span>
+                                        <b class="caret"></b>
+                                    </a>
+                                    <!-- <input type="checkbox" id="drop-2" /> -->
+                                    <ul class="dropdown-menu extended logout" style="background-color: black; width: 60%;">
+                                        <li><a href="#"><i class="fa fa-caret-square-o-right"></i> News</a></li>
+                                        <?php if ($_SESSION["role"] == 1) { ?>
+                                        <li><a href="upload_post.php" class="drop-text"><i class="fa fa-wpforms"></i> Upload Post</a></li>
+                                        <?php } ?>
+                                        <li><a href="logout.php"><i class="fa fa-key"></i> Logout</a></li>
+                                    </ul>
+                                </li>
+                            <?php
+                                } else {
+                            ?>
+                                <li><a href="login.php">Login</a></li>
+                                <li><a href="register.php">Register</a></li>
+                            <?php } ?>       
                         </ul>
                     </nav>
                 </div>

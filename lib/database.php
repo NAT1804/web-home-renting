@@ -1,6 +1,6 @@
 <?php 
 $file_path = realpath(dirname(__FILE__));
-include ($file_path."/../config/config.php"); 
+include_once ($file_path."/../config/config.php"); 
 ?>
 
 <?php

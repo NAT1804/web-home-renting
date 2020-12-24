@@ -120,3 +120,23 @@
         <span class="fa fa-angle-double-up" aria-hidden="true"></span>
     </a>
     <!-- //move top icon -->
+    <script src="public/js/jquery.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#city').on('change', function() {
+                var cityId = $(this).val();
+                if(cityId) {
+                    $.ajax({
+                        type:'POST',
+                        url:'classes/districtController.php',
+                        data:'cityId='+cityId,
+                        success:function(html) {
+                            $('#district').html(html);
+                        }
+                    });
+                } else {
+                    $('#district').html('<option value="">Chọn quận/Huyện</option>');
+                }
+            });         
+        });
+    </script>

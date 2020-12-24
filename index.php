@@ -1,10 +1,4 @@
 <?php
-    session_start() ;
-    //echo $_SESSION["Role"] ;
-    include "lib/connection.php" ;
-?>
-
-<?php
     include "inc/header.php";
 ?>
     <!-- //header -->
@@ -19,27 +13,45 @@
                 <div class="home-form-w3ls mt-5 pt-lg-4">
                     <form action="#" method="post">
                         <div class="row">
-                            <div class="col-lg-6">
-                                
+                            <div class="col-lg-6">                               
                                 <div class="form-group">
                                     <select required="" class="form-control">
-                                        <option id="title_option" value="0">Loại phòng</option>
-                                        <option value="1">Phòng trọ</option>
-                                        <option value="2">Chung cư mini</option>
+                                        <option id="title_option">Loại phòng</option>
+                                        <?php                                              
+                                            $style = new Style();
+                                            $showStyles = $style->showStyles();                               
+                                            for ($i=0; $i<count($showStyles); $i++) {
+                                        ?>
+                                        <option value="<?php echo $showStyles[$i]['style_id']; ?>"><?php echo $showStyles[$i]['style_name']; ?></option>
+                                        <!-- <option value="2">Chung cư mini</option>
                                         <option value="3">Nhà nguyên căn</option>
-                                        <option value="4">Chung cư nguyên căn</option>
+                                        <option value="4">Chung cư nguyên căn</option> -->
+                                        <?php 
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                
+                            <div class="col-lg-6">                                
                                 <div class="form-group">
-                                    <select required="" class="form-control">
-                                        <option value="0">Tỉnh</option>
-                                        <option value="1">Hà Nội</option>
-                                        <option value="2">Thành phố Hồ Chí Minh</option>
-                                        <option value="3">Đà Nẵng</option>
-                                        <option value="4">Hải Phòng</option>
+                                    <select required="" class="form-control" id="city">
+                                        <option>Chọn tỉnh/thành phố</option>
+                                        <?php                                              
+                                            $city = new City();
+                                            $showCities = $city->showCities();                               
+                                            for ($i=0; $i<count($showCities); $i++) {
+                                        ?>
+                                        <option value="<?php echo $showCities[$i]['province_id']; ?>"><?php echo $showCities[$i]['province_name']; ?></option>
+                                        <?php 
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">                                
+                                <div class="form-group">
+                                    <select required="" class="form-control" id="district">
+                                        <option value="0">Chọn quận/huyện</option>
                                     </select>
                                 </div>
                             </div>
@@ -59,7 +71,7 @@
             <h3 class="title-w3 mb-md-5 mb-4 text-center text-bl font-weight-bold">Welcome To Our <span>EasyAccomod Site</span></h3>
             <div class="row">
                 <div class="col-lg-6 text-center">
-                    <img src="images/about.jpg" alt="about" class="img-fluid" />
+                    <img src="public/images/about.jpg" alt="about" class="img-fluid" />
                 </div>
                 <div class="col-lg-6 pr-xl-5 mt-xl-4 mt-lg-0 mt-4">
                     <h3 class="title-sub mb-4">The best place to find the <span>house you want.</span></h3>
@@ -284,31 +296,31 @@
             <p class="text-center title-w3 mb-md-5 mb-4">Excepteur sint occaecat cupidatat</p>
             <div class="row news-grids text-center no-gutters">
                 <div class="col-md-4 gal-img">
-                    <a href="#gal1"><img src="images/g1.jpg" alt="Gallery Image" class="img-fluid"></a>
+                    <a href="#gal1"><img src="public/images/g1.jpg" alt="Gallery Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-4 gal-img">
-                    <a href="#gal2"><img src="images/g2.jpg" alt="Gallery Image" class="img-fluid"></a>
+                    <a href="#gal2"><img src="public/images/g2.jpg" alt="Gallery Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-4 gal-img">
-                    <a href="#gal3"><img src="images/g3.jpg" alt="Gallery Image" class="img-fluid"></a>
+                    <a href="#gal3"><img src="public/images/g3.jpg" alt="Gallery Image" class="img-fluid"></a>
                 </div>
             </div>
             <div class="row news-grids text-center no-gutters">
                 <div class="col-md-4 gal-img">
-                    <a href="#gal4"><img src="images/g4.jpg" alt="Gallery Image" class="img-fluid"></a>
+                    <a href="#gal4"><img src="public/images/g4.jpg" alt="Gallery Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-4 gal-img">
-                    <a href="#gal5"><img src="images/g5.jpg" alt="Gallery Image" class="img-fluid"></a>
+                    <a href="#gal5"><img src="public/images/g5.jpg" alt="Gallery Image" class="img-fluid"></a>
                 </div>
                 <div class="col-md-4 gal-img">
-                    <a href="#gal6"><img src="images/g6.jpg" alt="Gallery Image" class="img-fluid"></a>
+                    <a href="#gal6"><img src="public/images/g6.jpg" alt="Gallery Image" class="img-fluid"></a>
                 </div>
             </div>
             <!-- gallery popups -->
             <!-- popup-->
             <div id="gal1" class="pop-overlay animate">
                 <div class="popup">
-                    <img src="images/g1.jpg" alt="Popup Image" class="img-fluid" />
+                    <img src="public/images/g1.jpg" alt="Popup Image" class="img-fluid" />
                     <p class="mt-4">Nulla viverra pharetra se, eget pulvinar neque pharetra ac int. placerat placerat
                         dolor.</p>
                     <a class="close" href="#gallery">&times;</a>
@@ -318,7 +330,7 @@
             <!-- popup-->
             <div id="gal2" class="pop-overlay animate">
                 <div class="popup">
-                    <img src="images/g2.jpg" alt="Popup Image" class="img-fluid" />
+                    <img src="public/images/g2.jpg" alt="Popup Image" class="img-fluid" />
                     <p class="mt-4">Nulla viverra pharetra se, eget pulvinar neque pharetra ac int. placerat placerat
                         dolor.</p>
                     <a class="close" href="#gallery">&times;</a>
@@ -328,7 +340,7 @@
             <!-- popup-->
             <div id="gal3" class="pop-overlay animate">
                 <div class="popup">
-                    <img src="images/g3.jpg" alt="Popup Image" class="img-fluid" />
+                    <img src="public/images/g3.jpg" alt="Popup Image" class="img-fluid" />
                     <p class="mt-4">Nulla viverra pharetra se, eget pulvinar neque pharetra ac int. placerat placerat
                         dolor.</p>
                     <a class="close" href="#gallery">&times;</a>
@@ -338,7 +350,7 @@
             <!-- popup-->
             <div id="gal4" class="pop-overlay animate">
                 <div class="popup">
-                    <img src="images/g4.jpg" alt="Popup Image" class="img-fluid" />
+                    <img src="public/images/g4.jpg" alt="Popup Image" class="img-fluid" />
                     <p class="mt-4">Nulla viverra pharetra se, eget pulvinar neque pharetra ac int. placerat placerat
                         dolor.</p>
                     <a class="close" href="#gallery">&times;</a>
@@ -348,7 +360,7 @@
             <!-- popup-->
             <div id="gal5" class="pop-overlay animate">
                 <div class="popup">
-                    <img src="images/g5.jpg" alt="Popup Image" class="img-fluid" />
+                    <img src="public/images/g5.jpg" alt="Popup Image" class="img-fluid" />
                     <p class="mt-4">Nulla viverra pharetra se, eget pulvinar neque pharetra ac int. placerat placerat
                         dolor.</p>
                     <a class="close" href="#gallery">&times;</a>
@@ -358,7 +370,7 @@
             <!-- popup-->
             <div id="gal6" class="pop-overlay animate">
                 <div class="popup">
-                    <img src="images/g6.jpg" alt="Popup Image" class="img-fluid" />
+                    <img src="public/images/g6.jpg" alt="Popup Image" class="img-fluid" />
                     <p class="mt-4">Nulla viverra pharetra se, eget pulvinar neque pharetra ac int. placerat placerat
                         dolor.</p>
                     <a class="close" href="#gallery">&times;</a>
@@ -382,7 +394,7 @@
                         incididunt
                         ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
                         exercitation ullamco laboris nisi</p>
-                    <img src="images/te1.jpg" alt=" " class="img-fluid rounded-circle mt-5">
+                    <img src="public/images/te1.jpg" alt=" " class="img-fluid rounded-circle mt-5">
                     <h4 class="mt-4 text-wh font-weight-bold mb-4">Mary Jane</h4>
                 </div>
             </div>
@@ -407,7 +419,7 @@
                 </li>
             </ul>
         </div>
-        <img src="images/img2.png" alt="" class="img-fluid img-podi-w3ls">
+        <img src="public/images/img2.png" alt="" class="img-fluid img-podi-w3ls">
     </div>
     <!-- //apps -->
 
@@ -448,5 +460,4 @@
         include "inc/footer.php";
     ?>
 </body>
-
 </html>

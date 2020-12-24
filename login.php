@@ -1,55 +1,14 @@
-
-<!-- Xử lí đăng nhập -->
-<?php
-    session_start() ;
-    include "lib/connection.php";
-    $message = "";
-
-    if (isset($_POST["Login"]))
-    {
-        
-        if (empty($_POST["Username"]) || (empty($_POST["Password"])))
-        {
-            $message = "<label> All field is required! <label>" ;
-        }
-        else 
-        {   
-            $userName = $_POST["Username"] ;
-            $passWord = md5($_POST["Password"]) ;
- 
-
-            $query = "SELECT * FROM account WHERE username = :username AND password = :password AND role > 0 " ;
-            $statement = $connect->prepare($query) ;
-            $statement->execute(
-                array(
-                    'username' => $userName,
-                    'password' => $passWord
-
-                )
-                );
-            $count = $statement->rowCount();
-            $data = $statement->fetch(PDO::FETCH_OBJ);
-
-            if ($count > 0)
-            {
-                $_SESSION["UserId"] = $data->account_id ;
-                $_SESSION["Username"] = $_POST["Username"] ;
-                $_SESSION["Role"] = $data->role ;
-                header("Location:index.php") ;
-            }
-            else
-            {
-                $message = "Username OR Password is wrong" ;
-            }
-        }
-    }
-?> 
-
 <?php   
     include "inc/header.php";
-    
 ?>
-
+<?php 
+    $login = new UserLogin();
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['Login'])) {
+        $useremail = $_POST['Email'];
+        $password = $_POST['Password'];
+        $userLogin = $login->userLogin($useremail, $password);
+    }
+?>
     <!-- inner banner -->
     <div class="inner-banner-w3ls py-5" id="home">
         <div class="container py-xl-5 py-lg-3">
@@ -57,27 +16,30 @@
             <div class="modal-body my-5 pt-4">
                 <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">Login Now</h3>
                 <form action="login.php" method="post">
+                    <!-- //in ra thông báo -->
+                    <div class="form-group notice-success">
+                        <?php 
+                            if(isset($_SESSION['info-user'])) echo $_SESSION['info-user'];
+                        ?>
+                    </div>
+                    <div class="form-group notice-error">
+                        <?php
+                            if (isset($userLogin)) echo $userLogin;
+                        ?>
+                    </div>
                     <div class="form-group">
-                        <label class="col-form-label">Username</label>
-                        <input type="text" class="form-control" placeholder="Username" name="Username" required="" >
+                        <label class="col-form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="Email" name="Email" value="<?php if(isset($_COOKIE['useremail'])) echo $_COOKIE['useremail']; ?>" required>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="*****" name="Password" required="">
+                        <input type="password" class="form-control" placeholder="Password" name="Password" value="<?php if(isset($_COOKIE['password'])) echo $_COOKIE['password']; ?>" required>
                     </div>
                     <button type="submit" class="btn button-style-w3" name="Login" value="Login">Login</button>
-                    
-                    <!-- //in ra thông báo -->
-                    <?php
-                        if (isset($message))
-                        {
-                            echo '<label class=text-danger>' .$message. '</label>' ;
-                        }
-                    ?>
 
                     <div class="row sub-w3l mt-3 mb-5">
                         <div class="col-sm-6 sub-w3layouts_hub">
-                            <input type="checkbox" id="brand1" value="">
+                            <input type="checkbox" id="brand1" name="remember" <?php if(isset($_COOKIE['useremail'])) { ?> checked <?php } ?> >
                             <label for="brand1" class="text-li text-style-w3ls">
                                 <span></span>Remember me?</label>
                         </div>

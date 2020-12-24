@@ -12,7 +12,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Danh sách người đăng bài đang hoạt động
+      Danh sách người đăng bài đang chờ duyệt
     </div>
     <div class="row w3-res-tb">
       <div class="col-sm-5 m-b-xs">
@@ -56,18 +56,18 @@
         </thead>
         <tbody>
         <?php 
-            $showPostersActive = $poster->showPostersActive();
+            $showPostersNonActive = $poster->showPostersNonActive();
 
-            for ($i=0; $i<count($showPostersActive); $i++) {
+            for ($i=0; $i<count($showPostersNonActive); $i++) {
          ?>
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td><span><?php echo (int)$i + 1; ?></span></td>
-            <td><?php echo $showPostersActive[$i]['username']; ?></td>
-            <td><span class="text-ellipsis"><?php echo $showPostersActive[$i]['email']; ?></span></td>
-            <td><span class="text-ellipsis"><?php echo $showPostersActive[$i]['identity_card']; ?></span></td>
-            <td><span><?php echo $showPostersActive[$i]['phone_number']; ?></span></td>
-            <td><span><?php echo $showPostersActive[$i]['address']; ?></span></td>
+            <td><?php echo $showPostersNonActive[$i]['username']; ?></td>
+            <td><span class="text-ellipsis"><?php echo $showPostersNonActive[$i]['email']; ?></span></td>
+            <td><span class="text-ellipsis"><?php echo $showPostersNonActive[$i]['identity_card']; ?></span></td>
+            <td><span><?php echo $showPostersNonActive[$i]['phone_number']; ?></span></td>
+            <td><span><?php echo $showPostersNonActive[$i]['address']; ?></span></td>
             <td>
               <a href="" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a>
             </td>

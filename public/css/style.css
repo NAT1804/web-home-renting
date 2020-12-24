@@ -1797,3 +1797,30 @@ p.dont-do a:hover,
 }
 
 /* //responsive */
+#success {
+    color: green;
+    width: 100%; 
+    font-size: 18px; 
+    font-family: 'Poppins', sans-serif;
+}
+
+#error {
+    color: red;
+    width: 100%; 
+    font-size: 18px; 
+    font-family: 'Poppins', sans-serif;
+}
+
+#notice-error {
+    background-color: #ffe6e6;
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #fff;
+}
+
+#notice-success {
+    background-color: #ccffcc;
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #fff;
+}

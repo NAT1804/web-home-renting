@@ -1,16 +1,26 @@
 <?php 
     include "../lib/session.php";
     Session::checkSession(); 
+    
+    spl_autoload_register(function($className) {
+        include_once "../classes/".$className.".php";
+    });
+
+    include_once "../lib/database.php";
+    include_once "../helpers/format.php";
+
 ?>
 <?php 
     if(isset($_GET['action']) && $_GET['action'] == 'logout') {
         Session::destroy();
     }
+    $noti = new Notification();
+    //$fm = new Format();
  ?>
 <!DOCTYPE html>
 <html>
 <head>
-<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -43,7 +53,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
     <a href="index.php" class="logo">
-        VISITORS
+        ADMIN
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -122,11 +132,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </ul>
         </li>
         <!-- settings end -->
+        <?php 
+            $showNotificationsAdmin = $noti->showNotificationsAdmin();
+        ?>
         <!-- inbox dropdown start-->
         <li id="header_inbox_bar" class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="fa fa-envelope-o"></i>
-                <span class="badge bg-important">4</span>
+                <span class="badge bg-important"><?php echo count($showNotificationsAdmin); ?></span>
             </a>
             <ul class="dropdown-menu extended inbox">
                 <li>
@@ -135,53 +148,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li>
                     <a href="#">
                         <span class="photo"><img alt="avatar" src="images/3.png"></span>
-                                <span class="subject">
-                                <span class="from">Jonathan Smith</span>
-                                <span class="time">Just now</span>
-                                </span>
-                                <span class="message">
-                                    Hello, this is an example msg.
-                                </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="images/1.png"></span>
-                                <span class="subject">
-                                <span class="from">Jane Doe</span>
-                                <span class="time">2 min ago</span>
-                                </span>
-                                <span class="message">
-                                    Nice admin template
-                                </span>
+                        <span class="subject">
+                            <span class="from">Test</span>
+                            <span class="time">Just now</span>
+                        </span>
+                        <span class="message">
+                            Hello, this is an example msg.
+                        </span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="photo"><img alt="avatar" src="images/3.png"></span>
-                                <span class="subject">
-                                <span class="from">Tasi sam</span>
-                                <span class="time">2 days ago</span>
-                                </span>
-                                <span class="message">
-                                    This is an example msg.
-                                </span>
+                        <span class="subject">
+                            <span class="from"><?php echo $showNotificationsAdmin[0]['username']; ?></span>
+                            <span class="time">Just now</span>
+                        </span>
+                        <span class="message">
+                            Hello, this is an example msg.
+                        </span>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="images/2.png"></span>
-                                <span class="subject">
-                                <span class="from">Mr. Perfect</span>
-                                <span class="time">2 hour ago</span>
-                                </span>
-                                <span class="message">
-                                    Hi there, its a test
-                                </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">See all messages</a>
+                    <a href="inbox.php">Xem tất cả thông báo</a>
                 </li>
             </ul>
         </li>
@@ -202,22 +191,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span class="alert-icon"><i class="fa fa-bolt"></i></span>
                         <div class="noti-info">
                             <a href="#"> Server #1 overloaded.</a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="alert alert-danger clearfix">
-                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-                        <div class="noti-info">
-                            <a href="#"> Server #2 overloaded.</a>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="alert alert-success clearfix">
-                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-                        <div class="noti-info">
-                            <a href="#"> Server #3 overloaded.</a>
                         </div>
                     </div>
                 </li>

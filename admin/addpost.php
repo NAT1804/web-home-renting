@@ -1,4 +1,5 @@
 <?php 
+    $file_path = realpath(dirname(__FILE__));
     include 'inc/header.php';
     include 'inc/sidebar.php';
     include_once '../classes/city.php';

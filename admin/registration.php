@@ -1,4 +1,4 @@
-<?php include '../classes/signup.php'; ?>
+<?php include_once '../classes/signup.php'; ?>
 <?php 
 	$signup = new Signup();
 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {

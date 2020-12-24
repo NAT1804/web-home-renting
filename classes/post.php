@@ -1,8 +1,10 @@
 <?php 
-include_once '../lib/database.php';
-include_once '../helpers/format.php';
-require "../vendor/autoload.php";
-require "../config/config-cloud.php";
+    $file_path = realpath(dirname(__FILE__));
+    include_once ($file_path.'/../lib/database.php');
+    include_once ($file_path.'/../helpers/format.php');
+    require "../vendor/autoload.php";
+    require "../config/config-cloud.php";
+    include_once "notification.php";
 ?>
 
 <?php 
@@ -10,11 +12,13 @@ require "../config/config-cloud.php";
     {
         private $db;
         private $fm;
+        private $noti;
 
         public function __construct()
         {
             $this->db = new Database();
             $this->fm = new Format();
+            $this->noti = new Notification();
         }
 
         public function showPostsActive() {
@@ -156,6 +160,8 @@ require "../config/config-cloud.php";
             }
 
             $alert = "<span id='success'>Thêm bài đăng hợp lệ</span>";
+            $message = "Thêm bài đăng mới #".$postId;
+            $this->noti->addNotification($accId, $message);
             $_POST = array();
             return $alert;
 
@@ -268,6 +274,8 @@ require "../config/config-cloud.php";
             }
 
             $alert = "<span id='success'>Sửa bài đăng thành công</span>";
+            $message = "Sửa bài đăng #".$postId;
+            $this->noti->addNotification($accId, $message);
             return $alert;
         }   
     }

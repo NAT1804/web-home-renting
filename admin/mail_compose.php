@@ -16,7 +16,7 @@
                             Soạn thư
                         </a>
                         <ul class="nav nav-pills nav-stacked mail-nav">
-                            <li class="active"><a href="inbox.php"> <i class="fa fa-inbox"></i>Hộp thư đến<span class="label label-danger pull-right inbox-notification">9</span></a></li>
+                            <li class="active"><a href="inbox.php"> <i class="fa fa-inbox"></i>Thông báo<span class="label label-danger pull-right inbox-notification">9</span></a></li>
                             <li><a href="#"> <i class="fa fa-envelope-o"></i>Thư đã gửi</a></li>
                             <li><a href="#"> <i class="fa fa-certificate"></i>Quan trọng</a></li>
                             <li><a href="#"> <i class="fa fa-file-text-o"></i>Bản nháp<span class="label label-info pull-right inbox-notification">123</span></a></a></li>

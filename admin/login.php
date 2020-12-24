@@ -47,11 +47,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					}
 				?>
 				<input type="email" class="ggg" name="Email" placeholder="Email" value="<?php 
-					if (isset($_POST['Email'])) echo $_POST['Email'];
+					if (isset($_COOKIE['email'])) echo $_COOKIE['email'];
 				 ?>" required="">
 				<!-- <input type="text" class="ggg" name="Username" placeholder="USERNAME" required=""> -->
-				<input type="password" class="ggg" name="Password" placeholder="Mật khẩu" required="">
-				<!-- <span><input type="checkbox" />Ghi nhớ</span> -->
+				<input type="password" class="ggg" name="Password" placeholder="Mật khẩu" value="<?php 
+					if(isset($_COOKIE['pass'])) echo $_COOKIE['pass'];
+				 ?>" required="">
+				<span><input name="remember" type="checkbox" <?php if(isset($_COOKIE['email'])) { ?> checked <?php } ?> />Ghi nhớ</span>
 				<h6><a href="forgot-password.php">Quên mật khẩu?</a></h6>
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng nhập" name="login">

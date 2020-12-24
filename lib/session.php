@@ -38,7 +38,7 @@
         }
         //check phiên làm việc có tồn tại hay không
         public static function checkLogin(){
-                self::init();
+            self::init();
             if (self::get("adminlogin") == true) {
                 header("Location: index.php");
             }

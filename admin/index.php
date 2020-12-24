@@ -375,7 +375,6 @@
 					<div class="clearfix"> </div>
 				</div>
 </section>
-<?php include 'inc/footer.php' ?>
 </section>
 <!--main content end-->
 </section>

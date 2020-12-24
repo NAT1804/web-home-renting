@@ -1,16 +1,7 @@
-<?php 
-	/**
-	 * 
-	 */
-	class Format
-	{
-		
-		public function __construct()
-		{
-			
-		}
+<?php
+    class Format {
 
-		public function timeInAgo($timestamp) {
+        public function timeInAgo($timestamp) {
             date_default_timezone_set('Asia/Ho_Chi_Minh');
 
             $timestamp = strtotime($timestamp) ? strtotime($timestamp) : $timestamp;
@@ -40,6 +31,10 @@
                     return (round($time/31207680) == 1) ? "a year ago" : round($time/31207680).' years ago';
                     
             }
+        }
+
+        public function formatDate($date){
+            return date('F j, Y, g:i a', strtotime($date));
         }
 
         public function textShorten($text, $limit = 400){
@@ -83,10 +78,7 @@
             $res=strrev($res);
             return $res;    
         }
-
-        public function formatDate($date){
-            return date('F j, Y, g:i a', strtotime($date));
-        }
-
-	}
- ?>
+        
+    }
+?>
+ 

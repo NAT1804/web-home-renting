@@ -1,8 +1,9 @@
 <?php 
-    require_once "../PHPMailer/PHPMailer.php";
-    require_once "../PHPMailer/SMTP.php";
-    require_once "../PHPMailer/Exception.php";
-    require_once "../config/config.php";
+    $file_path = realpath(dirname(__FILE__));
+    require_once ($file_path."/../PHPMailer/PHPMailer.php");
+    require_once ($file_path."/../PHPMailer/SMTP.php");
+    require_once ($file_path."/../PHPMailer/Exception.php");
+    require_once ($file_path."/../config/config.php");
     use PHPMailer\PHPMailer\PHPMailer;
 ?>
 

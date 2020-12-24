@@ -1,8 +1,9 @@
 <?php 
 	include '../lib/session.php';
 	Session::checkLogin();
-	include_once '../lib/database.php';
-	include_once '../helpers/format.php';
+	$file_path = realpath(dirname(__FILE__));
+    include_once ($file_path.'/../lib/database.php');
+    include_once ($file_path.'/../helpers/format.php');
 	include 'mail.php';
 ?>
 
@@ -24,6 +25,13 @@
 			$adminEmail = $this->fm->validation($adminEmail);
 			$adminPass = $this->fm->validation($adminPass);
 
+			if (empty($_POST['remember'])) {
+				if (isset($_COOKIE['email']))
+					setcookie("email", "");
+				if (isset($_COOKIE['pass']))
+					setcookie("pass", "");
+			}
+
 			if (empty($adminEmail) || empty($adminPass)) {
 				$alert = "<span class='error' style='width: 100%; color: red; font-size: 18px;'>Email và Password không được rỗng.</span>";
 				return $alert;
@@ -36,11 +44,15 @@
 					if ($check[0]['status'] == "verified") {
 						if ($check[0]['code'] == 0) {
 							if ($check[0]['role'] == 0) {
+								if (!empty($_POST['remember'])) {
+									setcookie("email", $adminEmail, time()+ (10*365*24*60*60));
+									setcookie("pass", $adminPass, time()+ (10*365*24*60*60));
+								}
 								Session::set('adminlogin', true);
 								Session::set('adminId', $check[0]['account_id']);
 								Session::set('adminUsername', $check[0]['username']);
 								Session::set('adminEmail', $check[0]['email']);
-								Session::set('adminPass', $check[0]['password']);
+								Session::set('adminPass', md5($check[0]['password']));
 								header('Location: index.php');
 							} else {
 								$alert = "<span id='error'>Bạn không có quyền đăng nhập</span>";
