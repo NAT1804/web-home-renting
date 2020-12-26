@@ -2,8 +2,8 @@
     $file_path = realpath(dirname(__FILE__));
     include_once ($file_path.'/../lib/database.php');
     include_once ($file_path.'/../helpers/format.php');
-    require "../vendor/autoload.php";
-    require "../config/config-cloud.php";
+    include_once ($file_path."/../vendor/autoload.php");
+    include_once ($file_path."/../config/config-cloud.php");
     include_once "notification.php";
 ?>
 
@@ -22,37 +22,43 @@
         }
 
         public function showPostsActive() {
-            $query = "SELECT * FROM activepostslist";
+            $query = "SELECT * FROM activepostslist ORDER BY post_id DESC";
             $result = $this->db->doPreparedQuery($query, array());
 
             return $result;
         }
 
         public function showPostsNonActive() {
-            $query = "SELECT * FROM nonactivepostslist";
+            $query = "SELECT * FROM nonactivepostslist ORDER BY post_id DESC";
             $result = $this->db->doPreparedQuery($query, array());
 
             return $result;
         }
 
         public function showPostsRemoved() {
-            $query = "SELECT * FROM removedpostslist";
+            $query = "SELECT * FROM removedpostslist ORDER BY post_id DESC";
             $result = $this->db->doPreparedQuery($query, array());
 
             return $result;
         }
 
-        public function acceptPost($postId) {
+        public function acceptPost($accId, $postId) {
             $query = "UPDATE post SET status = ?, confirm_date = NOW(), expiry_date = DATE_ADD(NOW(), INTERVAL time DAY) WHERE post_id = ?";
             $result = $this->db->doPreparedSql($query, array(1, $postId));
 
+            $reply = "Bài đăng #".$postId." đã được duyệt.";
+            $type = "P";
+            $this->noti->sendNotificationToUser($accId, $reply, $type);
             return $result;
         }
 
-        public function removePost($posId){
+        public function removePost($accId, $posId){
             $query = "UPDATE post SET status = ? WHERE post_id = ?";
             $result = $this->db->doPreparedSql($query, array(2, $posId));
 
+            $reply = "Bài đăng #".$postId." đã bị loại bỏ.";
+            $type = "P";
+            $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
             return $result;
         }
 
@@ -60,6 +66,9 @@
             $query = "DELETE FROM post WHERE post_id = ?";
             $result = $this->db->doPreparedSql($query, array($posId));
 
+            $message = "Xóa bài đăng #".$postId;
+            $accId = Session::get('adminId');
+            $this->noti->addNotificationToAdmin($accId, $message);
             return $result;
         }
 
@@ -70,7 +79,7 @@
             return $result;
         }
 
-        public function addPost($data, $files) {
+        public function addPost($accId, $data, $files) {
             $title = $this->fm->validation($data['title']);
             $style = $this->fm->validation($data['style']);
             $city = $this->fm->validation($data['city']);
@@ -126,7 +135,6 @@
                 $alert = "<span id='error'>Chưa cung cấp đủ hình ảnh (ít nhất 3 ảnh)</span>";
                 return $alert;
             }
-            $accId = Session::get('adminId');
             $query = "INSERT INTO post(account_id,post_title, post_description, update_time, post_price, status, `time`, confirm_date, expiry_date) VALUES(?,?,?,now(),?,?,?,now(), DATE_ADD(NOW(), INTERVAL `time` DAY))";
             $result = $this->db->doPreparedSql($query, array($accId,$title,$description,$price,1,$time));
 
@@ -161,7 +169,8 @@
 
             $alert = "<span id='success'>Thêm bài đăng hợp lệ</span>";
             $message = "Thêm bài đăng mới #".$postId;
-            $this->noti->addNotification($accId, $message);
+            $type = "P";
+            $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
             $_POST = array();
             return $alert;
 
@@ -261,8 +270,8 @@
                 }
             }
 
+            $accId = $infoPost[0]['account_id'];
             if ($totalImage != 0) {
-                $accId = $infoPost[0]['account_id'];
 
                 for ($i=0; $i<$totalImage; $i++) {
                     $file_tmp = $_FILES['upload']['tmp_name'][$i];
@@ -275,7 +284,8 @@
 
             $alert = "<span id='success'>Sửa bài đăng thành công</span>";
             $message = "Sửa bài đăng #".$postId;
-            $this->noti->addNotification($accId, $message);
+            $type = "O";
+            $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
             return $alert;
         }   
     }

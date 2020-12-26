@@ -10,7 +10,8 @@
 <?php   
     $post = new Post();
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-        $addPost = $post->addPost($_POST, $_FILES);
+        $accId = Session::get('adminId');
+        $addPost = $post->addPost($accId, $_POST, $_FILES);
     }
 ?>
 <!--main content start-->

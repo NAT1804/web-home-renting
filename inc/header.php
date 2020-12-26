@@ -18,7 +18,7 @@
 <html lang="zxx">
 
 <head>
-    <title>Land Real Estates Category Bootstrap Responsive website Template | Home :: w3layouts</title>
+    <title>Trang chủ</title>
     <!-- Meta tag Keywords -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8" />
@@ -39,6 +39,8 @@
     <link href="public/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- Bootstrap-Core-CSS -->
     <link href="public/css/style.css" rel='stylesheet' type='text/css' />
+    <!-- <link href="public/css/style2.css" rel='stylesheet' type='text/css' /> -->
+    <!-- <link href="public/css/style-responsive.css" rel='stylesheet' type='text/css' /> -->
     <!-- Style-CSS -->
     <link href="public/css/font-awesome.css" rel="stylesheet">
     <!-- Font-Awesome-Icons-CSS -->
@@ -70,15 +72,50 @@
                         <label for="drop" class="toggle">Menu</label>
                         <input type="checkbox" id="drop" />
                         <ul class="menu">
-                            <li><a href="index.php">Home</a></li>
-                            <li><a href="#">Advanced Search</li>
-                            <li><a href="#blog">Blog</a></li>
-                            <li><a href="#contact">Contact Us</a></li>
-                            <?php
+                            <li><a href="index.php">Trang chủ</a></li>
+                            <li><a href="#">Tìm kiếm</li>
+                            <li><a href="#blog">Bài viết</a></li>
+                            <li><a href="#contact">Liên hệ</a></li>
+                            <?php 
+                                $noti = new Notification();
+                                $fm = new Format();
+                                $accId = Session::get('userId');
+                                $showNotificationsUser = $noti->showNotificationsUser($accId);
                                 if (isset($_SESSION["userId"]))
                                 {
                                     $name = $_SESSION["username"];
                             ?>
+                            <li id="header_inbox_bar" class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <i class="fa fa-envelope-o"></i>
+                                    <span class="badge bg-important"><?php echo count($showNotificationsUser); ?></span>
+                                </a>
+                                <ul class="dropdown-menu extended inbox" style="background-color: black;">
+                                    <li>
+                                        <p class="red">Bạn có <?php echo count($showNotificationsUser); ?> thông báo</p>
+                                    </li>
+                                    <?php for ($i=0; $i<count($showNotificationsUser); $i++) { ?>
+                                    <li>
+                                        <a href="#">
+                                            <!-- <span class="subject"> -->
+                                                <!-- <span class="from">Test</span> -->
+                                                <!-- <span class="time">Just now</span> -->
+                                            <!-- </span> -->
+                                            <span class="message">
+                                                <?php echo $showNotificationsUser[$i]['reply']; ?>
+                                            </span>
+                                            <span class="time">
+                                                <?php echo $fm->timeInAgo($showNotificationsUser[$i]['reply_at']); ?>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <?php } ?>
+                                    <li>
+                                        <a href="inbox.php">Xem tất cả thông báo</a>
+                                    </li>
+                                </ul>
+                            </li>
+
                                 <li class="dropdown">
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                         <!-- <img alt="" src="public/images/3.png" style="height: 20%; width: 20%; border-radius: 5px"> -->
@@ -86,19 +123,19 @@
                                         <b class="caret"></b>
                                     </a>
                                     <!-- <input type="checkbox" id="drop-2" /> -->
-                                    <ul class="dropdown-menu extended logout" style="background-color: black; width: 60%;">
-                                        <li><a href="#"><i class="fa fa-caret-square-o-right"></i> News</a></li>
+                                    <ul class="dropdown-menu extended logout" style="background-color: black;">
+                                        <li><a href="#"><i class="fa fa-caret-square-o-right"></i>&nbsp;Thông báo</a></li>
                                         <?php if ($_SESSION["role"] == 1) { ?>
-                                        <li><a href="upload_post.php" class="drop-text"><i class="fa fa-wpforms"></i> Upload Post</a></li>
+                                        <li><a href="upload_post.php" class="drop-text"><i class="fa fa-wpforms"></i>&nbsp;Đăng bài viết</a></li>
                                         <?php } ?>
-                                        <li><a href="logout.php"><i class="fa fa-key"></i> Logout</a></li>
+                                        <li><a href="logout.php"><i class="fa fa-key"></i>&nbsp;Đăng xuất</a></li>
                                     </ul>
                                 </li>
                             <?php
                                 } else {
                             ?>
-                                <li><a href="login.php">Login</a></li>
-                                <li><a href="register.php">Register</a></li>
+                                <li><a href="login.php"><span class="text-bl">Đăng nhập</span></a></li>
+                                <li><a href="register.php">Đăng ký</a></li>
                             <?php } ?>       
                         </ul>
                     </nav>

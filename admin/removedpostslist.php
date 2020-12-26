@@ -6,8 +6,8 @@
  ?>
  <?php 
     $post = new Post();
-    if (isset($_GET['accPostId']) && $_GET['accPostId'] != "") {
-        $acceptPost = $post->acceptPost($_GET['accPostId']);
+    if (isset($_GET['accPostId']) && $_GET['accPostId'] != "" && isset($_GET['accAccId'])) {
+        $acceptPost = $post->acceptPost($_GET['accAccId'], $_GET['accPostId']);
     } 
     if (isset($_GET['delPostId']) && $_GET['delPostId'] != "") {
         $delPost = $post->delPost($_GET['delPostId']);
@@ -78,7 +78,7 @@
             <td><span><?php echo $showPostsRemoved[$i]['expiry_date']; ?></span></td>
             <td><span><?php echo $showPostsRemoved[$i]['post_price']; ?></span></td>
             <td>
-              <a onclick="return confirm('Bạn chắc chắn muốn bài viết hoạt động trở lại?')" href="?accPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn bài viết hoạt động trở lại?')" href="?accPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>&accAccId=<?php echo $showPostsRemoved[$i]['account_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
               <a onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')" href="?delPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>

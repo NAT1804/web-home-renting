@@ -76,17 +76,17 @@
     </footer>
     <!-- //footer -->
     <!-- copyright -->
-    <div class="copyright-w3ls py-4">
+    <!-- <div class="copyright-w3ls py-4">
         <div class="container">
-            <div class="row">
+            <div class="row"> -->
                 <!-- copyright -->
-                <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">© 2019 EasyAccomod. All
+                <!-- <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">© 2019 EasyAccomod. All
                     Rights Reserved | Design by
                     <a href="https://w3layouts.com/" target="_blank">W3layouts</a>
-                </p>
+                </p> -->
                 <!-- //copyright -->
                 <!-- social icons -->
-                <div class="col-lg-4 w3social-icons text-lg-right text-center mt-lg-0 mt-3">
+                <!-- <div class="col-lg-4 w3social-icons text-lg-right text-center mt-lg-0 mt-3">
                     <ul>
                         <li>
                             <a href="#" class="rounded-circle">
@@ -109,11 +109,11 @@
                             </a>
                         </li>
                     </ul>
-                </div>
+                </div> -->
                 <!-- //social icons -->
-            </div>
+            <!-- </div>
         </div>
-    </div>
+    </div> -->
     <!-- //copyright -->
     <!-- move top icon -->
     <a href="#home" class="move-top text-center">

@@ -60,7 +60,7 @@
             <div class="col-sm-9 mail-w3agile">
                 <section class="panel">
                     <header class="panel-heading wht-bg">
-                       <h4 class="gen-case">Thông báo (34)
+                       <h4 class="gen-case">Thông báo (<?php echo count($showNotificationsAdmin); ?>)
                         <form action="#" class="pull-right mail-src-position">
                             <div class="input-append">
                                 <input type="text" class="form-control " placeholder="Search Mail">
@@ -129,20 +129,39 @@
                             </ul>
                         </div>
                         <div class="table-inbox-wrap ">
-                            <table class="table table-inbox table-hover">
+                        <table class="table table-inbox table-hover">
                         <tbody>
                         <?php   
                             for ($i=0; $i < count($showNotificationsAdmin); $i++) {
                         ?>
+                        <?php if ($showNotificationsAdmin[$i]['reply'] == NULL) { ?>
                         <tr class="unread">
+                        <?php } else { ?>
+                        <tr class=""> 
+                        <?php } ?>    
                             <td class="inbox-small-cells">
                                 <input type="checkbox" class="mail-checkbox">
                             </td>
                             <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message  dont-show"><a href="#"><?php echo $showNotificationsAdmin[$i]['username']; ?></a></td>
-                            <td class="view-message "><a href="#"><?php echo $showNotificationsAdmin[$i]['message']; ?></a></td>
+                            <td class="view-message  dont-show"><span class="label label-danger pull-right"><?php echo ($showNotificationsAdmin[$i]['role'] == 0) ? 'admin' : 'user' ?></span>
+                                <a href=""><?php echo $showNotificationsAdmin[$i]['username']; ?></a>
+                            </td>
+                            <td class="view-message ">
+                                <a href="<?php 
+                                    switch ($showNotificationsAdmin[$i]['type']) {
+                                        case "A":
+                                            echo "nonactiveposterslist.php";
+                                            break;
+                                        case "P":
+                                            echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
+                                            break;
+                                    }                                
+                                 ?>"><?php echo $showNotificationsAdmin[$i]['message']; ?></a>
+                            </td>
                             <!-- <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td> -->
-                            <td class="view-message"><?php echo ($showNotificationsAdmin[$i]['role'] == 0) ? 'admin' : 'user' ?></td>
+                            <td class="view-message">
+                                <a href=""><?php echo $showNotificationsAdmin[$i]['reply']; ?></a>
+                            </td>
                             <td class="view-message  text-right"><?php echo $fm->timeInAgo($showNotificationsAdmin[$i]['create_at']); ?></td>
                         </tr>
                         <?php } ?>
@@ -297,6 +316,6 @@
 <script src="js/jquery.slimscroll.js"></script>
 <script src="js/jquery.nicescroll.js"></script>
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
-<script src="js/jquery.scrollTo.js"></script>
+<script src="js/jquery.scrollTo.js"></script>  
 </body>
 </html>

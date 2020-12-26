@@ -57,6 +57,11 @@
             return $data;
         }
 
+        public function formatPrice($price) {
+            $price = (float)$price;
+            return ((float)$price/1000000)." triệu/tháng";
+        }
+
         public function title(){
             $path = $_SERVER['SCRIPT_FILENAME'];
             $title = basename($path, '.php');

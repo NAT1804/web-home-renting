@@ -45,6 +45,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/jquery2.0.3.min.js"></script>
 <script src="js/raphael-min.js"></script>
 <script src="js/morris.js"></script>
+
 </head>
 <body>
 <section id="container">
@@ -67,11 +68,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <i class="fa fa-tasks"></i>
-                <span class="badge bg-success">8</span>
+                <span class="badge bg-success"></span>
             </a>
             <ul class="dropdown-menu extended tasks-bar">
                 <li>
-                    <p class="">You have 8 pending tasks</p>
+                    <p class="">You have 0 pending tasks</p>
                 </li>
                 <li>
                     <a href="#">
@@ -86,45 +87,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </div>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <div class="task-info clearfix">
-                            <div class="desc pull-left">
-                                <h5>Product Delivery</h5>
-                                <p>45% , Deadline  12 June’13</p>
-                            </div>
-                                    <span class="notification-pie-chart pull-right" data-percent="78">
-                            <span class="percent"></span>
-                            </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="task-info clearfix">
-                            <div class="desc pull-left">
-                                <h5>Payment collection</h5>
-                                <p>87% , Deadline  12 June’13</p>
-                            </div>
-                                    <span class="notification-pie-chart pull-right" data-percent="60">
-                            <span class="percent"></span>
-                            </span>
-                        </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <div class="task-info clearfix">
-                            <div class="desc pull-left">
-                                <h5>Target Sell</h5>
-                                <p>33% , Deadline  12 June’13</p>
-                            </div>
-                                    <span class="notification-pie-chart pull-right" data-percent="90">
-                            <span class="percent"></span>
-                            </span>
-                        </div>
-                    </a>
-                </li>
 
                 <li class="external">
                     <a href="#">See All Tasks</a>
@@ -133,71 +95,47 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </li>
         <!-- settings end -->
         <?php 
+            $fm = new Format();
             $showNotificationsAdmin = $noti->showNotificationsAdmin();
         ?>
         <!-- inbox dropdown start-->
         <li id="header_inbox_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                <i class="fa fa-envelope-o"></i>
+            <a data-toggle="dropdown" class="dropdown-toggle" href="#" id="countNoti">
+                <i class="fa fa-bell-o"></i>
                 <span class="badge bg-important"><?php echo count($showNotificationsAdmin); ?></span>
             </a>
+            <script>
+                $(document).ready(function() {
+                    $('#countNoti').click(function() {
+                        console.log('click');
+                        $(this).find('span').text('');
+                    });
+                });      
+            </script>
             <ul class="dropdown-menu extended inbox">
                 <li>
                     <p class="red">You have 4 Mails</p>
                 </li>
+                <?php for ($i=0; $i<4; $i++) { ?>
                 <li>
                     <a href="#">
                         <span class="photo"><img alt="avatar" src="images/3.png"></span>
                         <span class="subject">
-                            <span class="from">Test</span>
-                            <span class="time">Just now</span>
+                            <span class="from"><?php echo $showNotificationsAdmin[$i]['username']; ?></span>
+                            <span class="time"><?php echo $fm->timeInAgo($showNotificationsAdmin[$i]['create_at']); ?></span>
                         </span>
                         <span class="message">
-                            Hello, this is an example msg.
+                            <?php echo $fm->textShorten($showNotificationsAdmin[$i]['message'], 45); ?>
                         </span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <span class="photo"><img alt="avatar" src="images/3.png"></span>
-                        <span class="subject">
-                            <span class="from"><?php echo $showNotificationsAdmin[0]['username']; ?></span>
-                            <span class="time">Just now</span>
-                        </span>
-                        <span class="message">
-                            Hello, this is an example msg.
-                        </span>
-                    </a>
-                </li>
+                <?php } ?>
                 <li>
                     <a href="inbox.php">Xem tất cả thông báo</a>
                 </li>
             </ul>
         </li>
         <!-- inbox dropdown end -->
-        <!-- notification dropdown start-->
-        <li id="header_notification_bar" class="dropdown">
-            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-
-                <i class="fa fa-bell-o"></i>
-                <span class="badge bg-warning">3</span>
-            </a>
-            <ul class="dropdown-menu extended notification">
-                <li>
-                    <p>Notifications</p>
-                </li>
-                <li>
-                    <div class="alert alert-info clearfix">
-                        <span class="alert-icon"><i class="fa fa-bolt"></i></span>
-                        <div class="noti-info">
-                            <a href="#"> Server #1 overloaded.</a>
-                        </div>
-                    </div>
-                </li>
-
-            </ul>
-        </li>
-        <!-- notification dropdown end -->
     </ul>
     <!--  notification end -->
 </div>

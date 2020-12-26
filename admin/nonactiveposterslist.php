@@ -5,6 +5,9 @@
  ?>
  <?php 
     $poster = new Poster();
+    if (isset($_GET['accId'])) {
+      $acceptPoster = $poster->acceptPoster($_GET['accId']);
+    }
 ?>
 <!--main content start-->
 <section id="main-content">
@@ -69,7 +72,8 @@
             <td><span><?php echo $showPostersNonActive[$i]['phone_number']; ?></span></td>
             <td><span><?php echo $showPostersNonActive[$i]['address']; ?></span></td>
             <td>
-              <a href="" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn duyệt tài khoản này?');" href="?accId=<?php echo $showPostersNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Duyệt</i></a>
+              <a href="" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text">Loại</i></a>
             </td>
           </tr>
         <?php } ?>  

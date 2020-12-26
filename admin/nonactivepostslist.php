@@ -5,8 +5,11 @@
  ?>
  <?php 
     $post = new Post();
-    if (isset($_GET['postId'])) {
-      $acceptPost = $post->acceptPost($_GET['postId']);
+    if (isset($_GET['postId']) && isset($_GET['accId'])) {
+        $acceptPost = $post->acceptPost($_GET['accId'], $_GET['postId']);
+    }
+    if (isset($_GET['rmPostId']) && isset($_GET['rmAccId'])) {
+        $acceptPost = $post->acceptPost($_GET['rmAccId'], $_GET['rmPostId']);
     }
 ?>
 <!--main content start-->
@@ -73,8 +76,8 @@
             <td><span><?php echo $showPostsNonActive[$i]['update_time']; ?></span></td>
             <td><span><?php echo $showPostsNonActive[$i]['post_price']; ?></span></td>
             <td>
-              <a onclick="return confirm('Are you sure you want to browse this post?');" href="?postId=<?php echo $showPostsNonActive['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
-              <a href="" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?postId=<?php echo $showPostsNonActive['post_id']; ?>&accId=<?php $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết nay?');" href="?rmPostId=<?php echo $showPostsNonActive['post_id']; ?>&rmAccId=<?php $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         <?php } ?>  
