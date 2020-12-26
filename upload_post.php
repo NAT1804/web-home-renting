@@ -20,13 +20,13 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="House Number" name="houseNumber" required="">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group home-form-w3ls">
                                 <select name="province" required="" class="form-control">
-                                        <option value="0">Tỉnh</option>
-                                        <option value="1">Hà Nội</option>
-                                        <option value="2">Thành phố Hồ Chí Minh</option>
-                                        <option value="3">Đà Nẵng</option>
-                                        <option value="4">Hải Phòng</option>
+                                        <option id="title_option">Tỉnh</option>
+                                        <option value="0">Hà Nội</option>
+                                        <option value="1">Thành phố Hồ Chí Minh</option>
+                                        <option value="2">Đà Nẵng</option>
+                                        <option value="3">Hải Phòng</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -38,13 +38,13 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" placeholder="Street" name="street" required="">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group home-form-w3ls">
                                 <select name = "district" required="" class="form-control">
-                                        <option value="0">Huyện</option>
+                                        <option id="title_option">Huyện</option>
+                                        <option value="0">???</option>
                                         <option value="1">???</option>
                                         <option value="2">???</option>
                                         <option value="3">???</option>
-                                        <option value="4">???</option>
                                 </select>
                             </div>
                         </div>
@@ -125,49 +125,39 @@
                         <input type="radio" id="koBC" name="balcony" value=0>
                         <label class="col-form-label" for="koBC">Không</label><br>
                     </fieldset>
-                    <!-- <div class="form-group">
-                        <label class="col-form-label">Username</label>
-                        <input type="text" class="form-control" placeholder="Username" name="Username" required="">
-                    </div>
 
-                    <div class="form-group">
-                        <label class="col-form-label">Email</label>
-                        <input type="email" class="form-control" placeholder="loremipsum@email.com" name="Email"
-                            required="">
-                    </div>
+                    <fieldset class="form-group" data-role="controlgroup">
+                        <label class="col-form-label">Điện nước</label><br>
+                        <label class="col-form-label" for="dien">Điện: VNĐ/số</label>
+                        <input type="text" class="form-control col-lg-4" placeholder="Giá điện" required=""><br>
+                        <label class="col-form-label" for="nuoc">Nước: </label>
+                        <input type="radio" id="nuoc1" name="diennuoc" value=1 checked>
+                        <label class="col-form-label" for="nuoc1">VNĐ/người</label>
+                        <input type="radio" id="nuoc2" name="diennuoc" value=0>
+                        <label class="col-form-label" for="nuoc2">VNĐ/m<sup>3</sup></label><br>
+                        <input type="text" class="form-control col-lg-4" placeholder="Giá nước" required=""><br>
+                    </fieldset>
 
-                    <div class="form-group">
-                        <label class="col-form-label">Identity Card</label>
-                        <input type="text" class="form-control" placeholder="123456789" name="ID" required="">
-                    </div>
+                    <fieldset>
+                    <label class="col-form-label">Hình ảnh minh họa: </label>
+                    <!-- <button class="btn" style="border-radius: 5px; font-size: 14px; margin-left: 10px">Tải ảnh lên</button> -->
+                    <input type="file" id="filefield" name="illu" multiple="multiple" style="color: #fff;letter-spacing: 1px; font-size: 15px; margin-left: 10px; margin-bottom: 5px;">
+                    </fieldset>
 
-                    <div class="form-group">
-                        <label class="col-form-label">Phone Number</label>
-                        <input type="text" class="form-control" placeholder="0123456789" name="PhoneNumber" required="">
-                    </div>
+                    <br><hr style="border-top: 2px solid #fff">
+                    <fieldset>
+                        <label class="col-form-label">Thông tin liên lạc</label><br>
+                        <label class="col-form-label">Họ tên: </label>
+                        <input type="text" class="form-control col-lg-4"><br>
+                        <label class="col-form-label">Số điện thoại: </label>
+                        <input type="text" class="form-control col-lg-4"><br>
+                        <!-- kết nối dữ liệu từ tài khoản của người đăng -->
+                    </fieldset>
 
-                    <div class="form-group">
-                        <label class="col-form-label">Address</label>
-                        <input type="text" class="form-control" placeholder="Quận Thanh Xuân" name="Address" required="">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="*****" name="Password" required="">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-form-label">Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="*****" name="ConfirmPass" required="">
-                    </div>
- -->
-                    <!-- <div class="sub-w3l my-3">
-                        <div class="sub-w3layouts_hub">
-                            <input type="checkbox" id="brand1" value="" required="">
-                            <label for="brand1" class="text-li text-style-w3ls">
-                                <span></span>I Accept to the Terms & Conditions</label>
-                        </div>
-                    </div> -->
+                    <fieldset>
+                        <label class="col-form-label">Thời gian đăng bài: </label>
+                        <input type="date" class="form-control col-lg-4">
+                    </fieldset>
 
                     <button type="submit" class="btn button-style-w3" name="uploadPost">Đăng bài</button>
                 </form>
