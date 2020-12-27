@@ -96,10 +96,6 @@
                                     <?php for ($i=0; $i<count($showNotificationsUser); $i++) { ?>
                                     <li>
                                         <a href="#">
-                                            <!-- <span class="subject"> -->
-                                                <!-- <span class="from">Test</span> -->
-                                                <!-- <span class="time">Just now</span> -->
-                                            <!-- </span> -->
                                             <span class="message">
                                                 <?php echo $showNotificationsUser[$i]['reply']; ?>
                                             </span>

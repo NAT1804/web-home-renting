@@ -17,12 +17,12 @@
                 <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">Login Now</h3>
                 <form action="login.php" method="post">
                     <!-- //in ra thông báo -->
-                    <div class="form-group notice-success">
+                    <div class="form-group" id="notice-success">
                         <?php 
                             if(isset($_SESSION['info-user'])) echo $_SESSION['info-user'];
                         ?>
                     </div>
-                    <div class="form-group notice-error">
+                    <div class="form-group" id="notice-error">
                         <?php
                             if (isset($userLogin)) echo $userLogin;
                         ?>
