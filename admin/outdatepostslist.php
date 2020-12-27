@@ -10,8 +10,8 @@
       $postId = $_GET['accPostId'];
       $acceptPost = $post->acceptPost($accId, $postId);
     }
-    if (isset($_GET['rmPostId']) && isset($_GET['rmAccId'])) {
-        $removePost = $post->removePost($_GET['rmAccId'], $_GET['rmPostId']);
+    if (isset($_GET['delPostId'])) {
+        $delPost = $post->delPost($_GET['delPostId']);
     }
 ?>
 <!--main content start-->
@@ -80,7 +80,7 @@
             <td><span><?php echo $showPostsOutDate[$i]['expiry_date']; ?></span></td>
             <td>
               <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?accAccId=<?php echo $showPostsOutDate[$i]['account_id']; ?>&accPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết này?');" href="?rmPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>&rmAccId=<?php echo $showPostsOutDate[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn xoá bài viết này?');" href="?delPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text">Xóa</i></a>
             </td>
           </tr>
         <?php } ?>  

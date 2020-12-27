@@ -6,8 +6,8 @@
  ?>
  <?php 
     $post = new Post();
-    if (isset($_GET['rmPostId']) && $_GET['rmPostId'] != "") {
-        $removePost = $post->removePost($_GET['rmPostId']);
+    if (isset($_GET['rmPostId']) && $_GET['rmPostId'] != "" && isset($_GET['rmAccId'])) {
+        $removePost = $post->removePost($_GET['rmAccId'], $_GET['rmPostId']);
     }
 ?>
 <!--main content start-->
@@ -29,6 +29,7 @@
         <button class="btn btn-sm btn-default">Apply</button>                
       </div>
       <div class="col-sm-4">
+        <?php if(isset($removePost)) echo $removePost; ?>
       </div>
       <div class="col-sm-3">
         <div class="input-group">
@@ -77,7 +78,7 @@
             <td><?php echo $showPostsActive[$i]['post_price']; ?></td>
             <td>
               <a href="editpost.php?editPostId=<?php echo $showPostsActive[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Sửa</i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết này?');" href="?rmPostId=<?php echo $showPostsActive[$i]['post_id'] ?>" class="active" ui-toggle-class="">
+              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết này?');" href="?rmPostId=<?php echo $showPostsActive[$i]['post_id'] ?>&rmAccId=<?php echo $showPostsActive[$i]['account_id'] ?>" class="active" ui-toggle-class="">
                 <i class="fa fa-times text-danger text">Xóa</i></a>
             </td>
           </tr>

@@ -25,7 +25,7 @@
         }
 
         public function showPostOfAccId($accId) {
-            $query = "SELECT * FROM post p INNER JOIN account a ON a.account_id = p.account_id WHERE p.account_id = ? ORDER BY post_id DESC";
+            $query = "SELECT p.*, a.username FROM post p INNER JOIN account a ON a.account_id = p.account_id WHERE p.account_id = ? ORDER BY post_id DESC";
             $result = $this->db->doPreparedQuery($query, array($accId));
             return $result;
         }
@@ -65,7 +65,13 @@
             $reply = "Bài đăng #".$postId." đã được duyệt.";
             $type = "P";
             $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
-            return $result;
+            if (!empty($result)) {
+                $alert = "<span id='success'>Duyệt bài thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Duyệt bài thất bại</span>";
+                return $alert;
+            }
         }
 
         public function removePost($accId, $posId){
@@ -75,17 +81,58 @@
             $reply = "Bài đăng #".$postId." đã bị loại bỏ.";
             $type = "P";
             $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
-            return $result;
+            if (!empty($result)) {
+                $alert = "<span id='success'>Loại bỏ bài thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Loại bỏ bài thất bại</span>";
+                return $alert;
+            }
         }
 
         public function delPost($postId) {
             $query = "DELETE FROM post WHERE post_id = ?";
-            $result = $this->db->doPreparedSql($query, array($posId));
+            $result = $this->db->doPreparedSql($query, array($postId));
 
-            $message = "Xóa bài đăng #".$postId;
-            $accId = Session::get('adminId');
-            $this->noti->addNotificationToAdmin($accId, $message);
-            return $result;
+            // $message = "Xóa bài đăng #".$postId;
+            // $accId = Session::get('adminId');
+            // $this->noti->addNotificationToAdmin($accId, $message);
+            if (!empty($result)) {
+                $alert = "<span id='success'>Xóa bài thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Xóa bài thất bại</span>";
+                return $alert;
+            }
+        }
+
+        public function updateStatusPost($accId, $postId) {
+            $query = "UPDATE post SET confirm_date = now(), rental_status = ? WHERE post_id = ?";
+            $result = $this->db->doPreparedSql($query, array(1, $postId));
+
+            $message = "Cập nhật trạng thái đã thuê của bài viết #".$postId;
+            $type = "R";
+            $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
+            if (!empty($result)) {
+                $alert = "<span id='success'>Cập nhật trạng thái thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Cập nhật trạng thái thất bại</span>";
+                return $alert;
+            }
+        }
+
+        public function editRequiredPost($accId, $postId){
+            $message = "Yêu cầu chỉnh sửa bài viết #".$postId;
+            $type = "O";
+            $result = $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
+            if (!empty($result)) {
+                $alert = "<span id='success'>Gửi yêu cầu thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Gửi yêu cầu thất bại</span>";
+                return $alert;
+            }
         }
 
         public function getPostById($postId) {

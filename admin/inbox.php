@@ -157,9 +157,21 @@
                                                 echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
                                                 break;
                                             } else {
-                                                echo "nonactivepostslist.php";
+                                                echo "nonactiveposterslist.php";
                                                 break;
                                             }
+                                        case "R":
+                                        case "O":
+                                            if ($showNotificationsAdmin[$i]['role'] == 0) {
+                                                echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
+                                                break;
+                                            } else {
+                                                echo "post_detail.php?detailPostId=".$showNotificationsAdmin[$i]['post_id']."&detailAccId=".$showNotificationsAdmin[$i]['account_id'];
+                                                break;
+                                            }
+                                        case "C":
+                                            echo "commentlist.php";
+                                            break;
                                     }                                
                                  ?>"><?php echo $showNotificationsAdmin[$i]['message']; ?></a>
                             </td>

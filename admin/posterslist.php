@@ -5,6 +5,9 @@
  ?>
  <?php 
     $poster = new Poster();
+    if (isset($_GET['delId'])) {
+        $delPoster = $poster->delPoster($_GET['delId']);
+    }
 ?>
 <!--main content start-->
 <section id="main-content">
@@ -25,6 +28,9 @@
         <button class="btn btn-sm btn-default">Apply</button>                
       </div>
       <div class="col-sm-4">
+        <?php if (isset($delPoster)) {
+            echo $delPoster;
+        } ?>
       </div>
       <div class="col-sm-3">
         <div class="input-group">
@@ -69,7 +75,7 @@
             <td><span><?php echo $showPostersActive[$i]['phone_number']; ?></span></td>
             <td><span><?php echo $showPostersActive[$i]['address']; ?></span></td>
             <td>
-              <a href="" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn xóa tài khoản này?');" href="?delId=<?php echo $showPostersActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         <?php } ?>  

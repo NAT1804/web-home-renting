@@ -32,6 +32,8 @@
         <button class="btn btn-sm btn-default">Apply</button>                
       </div>
       <div class="col-sm-4">
+        <?php if(isset($acceptPost)) echo $acceptPost; ?>
+        <?php if(isset($delPost)) echo $delPost; ?>
       </div>
       <div class="col-sm-3">
         <div class="input-group">

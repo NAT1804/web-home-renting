@@ -22,6 +22,19 @@
 
             return $result;
         }
+
+        public function delUser($accId) {
+            $query = "DELETE FROM account WHERE account_id = ?";
+            $result = $this->db->doPreparedSql($query, array($accId));
+
+            if (!empty($result)) {
+                $alert = "<span id='success'>Xóa tài khoản thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Xóa tài khoản thất bại</span>";
+                return $alert;
+            }
+        }
  
     }
 ?>

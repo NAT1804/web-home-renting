@@ -41,9 +41,44 @@
             $type = "A";
             $postId = null;
             $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
-            return $result;
+            if (!empty($result)) {
+                $alert = "<span id='success'>Duyệt tài khoản thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Duyệt tài khoản thất bại</span>";
+                return $alert;
+            }
         }
 
+        public function rejectPoster($accId) {
+            $query = "UPDATE account SET request = ? WHERE account_id = ?";
+            $result = $this->db->doPreparedSql($query, array(0, $accId));
+
+            $reply = "Tài khoản #".$accId." bị từ chối.";
+            $type = "A";
+            $postId = null;
+            $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
+            if (!empty($result)) {
+                $alert = "<span id='success'>Duyệt tài khoản thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Duyệt tài khoản thất bại</span>";
+                return $alert;
+            }
+        }
+
+        public function delPoster($accId) {
+            $query = "DELETE FROM account WHERE account_id = ?";
+            $result = $this->db->doPreparedSql($query, array($accId));
+
+            if (!empty($result)) {
+                $alert = "<span id='success'>Xóa tài khoản thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Xóa tài khoản thất bại</span>";
+                return $alert;
+            }
+        }
   
     }
 ?>

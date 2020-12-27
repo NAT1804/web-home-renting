@@ -33,6 +33,8 @@
         <button class="btn btn-sm btn-default">Apply</button>                
       </div>
       <div class="col-sm-4">
+        <?php if(isset($acceptPost)) echo $acceptPost; ?>
+        <?php if(isset($removePost)) echo $removePost; ?>
       </div>
       <div class="col-sm-3">
         <div class="input-group">
@@ -81,6 +83,7 @@
             <td>
               <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?accAccId=<?php echo $showPostsNonActive[$i]['account_id']; ?>&accPostId=<?php echo $showPostsNonActive[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
               <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết này?');" href="?rmPostId=<?php echo $showPostsNonActive[$i]['post_id']; ?>&rmAccId=<?php echo $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
+              <a href="post_detail.php?detailPostId=<?php echo $showPostsNonActive[$i]['post_id']; ?>&detailAccId=<?php echo $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-book text"></i></a>
             </td>
           </tr>
         <?php } ?>  

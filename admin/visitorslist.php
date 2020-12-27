@@ -5,6 +5,9 @@
  ?>
  <?php 
     $visitor = new Visitor();
+    if (isset($_GET['delId'])) {
+        $delUser = $visitor->delUser($_GET['delId']);
+    }
 ?>
 <!--main content start-->
 <section id="main-content">
@@ -25,6 +28,7 @@
         <button class="btn btn-sm btn-default">Apply</button>                
       </div>
       <div class="col-sm-4">
+        <?php if(isset($delUser)) echo $delUser; ?>
       </div>
       <div class="col-sm-3">
         <div class="input-group">
@@ -45,6 +49,7 @@
               </label>
             </th>
             <th>ID</th>
+            <th>Code</th>
             <th>Username</th>
             <th>Email</th>
             <th>Edentity Card</th>
@@ -63,13 +68,14 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td><span><?php echo (int)$i + 1; ?></span></td>
+            <td><?php echo "#".$showVisitors[$i]['account_id']; ?></td>
             <td><?php echo $showVisitors[$i]['username']; ?></td>
             <td><span class="text-ellipsis"><?php echo $showVisitors[$i]['email']; ?></span></td>
             <td><span class="text-ellipsis"><?php echo $showVisitors[$i]['identity_card']; ?></span></td>
             <td><span><?php echo $showVisitors[$i]['phone_number']; ?></span></td>
             <td><span><?php echo $showVisitors[$i]['address']; ?></span></td>
             <td>
-              <a href="" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn xóa tài khoản này?');" href="?delId=<?php echo $showVisitors[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         <?php } ?>  
