@@ -351,7 +351,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label"></label>
                         <div class="col-sm-6">
-                            <input type="submit" name="submit" value="Sửa">
+                            <input type="submit" name="submit" value="Sửa" style="width: 100%;">
                         </div>
                     </div>
                 </form>

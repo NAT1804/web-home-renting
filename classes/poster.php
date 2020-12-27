@@ -39,7 +39,8 @@
 
             $reply = "Tài khoản #".$accId." được duyệt có thể đăng bài.";
             $type = "A";
-            $this->noti->sendNotificationToUser($accId, $reply, $type);
+            $postId = null;
+            $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
             return $result;
         }
 

@@ -1,94 +1,86 @@
 <?php
     include "inc/header.php" ;
+    include "inc/banner.php";
 ?>
-    <div class="main-w3pvt mian-content-wthree text-center" id="home">
-        <div class="container">
-            <div class="style-banner mx-auto">
-                <h3 class="text-wh font-weight-bold">Search and Find Your <span>Luxury</span> Homes</h3>
-                <p class="mt-2 text-li" id="find">Property for sale & for rent around the world</p>
-                <!-- form -->
-                <div class="home-form-w3ls mt-5 pt-lg-4">
-                    <form action="#" method="post">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                
-                                <div class="form-group">
-                                    <select required="" class="form-control">
-                                        <option id="title_option" value="0">Loại phòng</option>
-                                        <option value="1">Phòng trọ</option>
-                                        <option value="2">Chung cư mini</option>
-                                        <option value="3">Nhà nguyên căn</option>
-                                        <option value="4">Chung cư nguyên căn</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                
-                                <div class="form-group">
-                                    <select required="" class="form-control">
-                                        <option value="0">Tỉnh</option>
-                                        <option value="1">Hà Nội</option>
-                                        <option value="2">Thành phố Hồ Chí Minh</option>
-                                        <option value="3">Đà Nẵng</option>
-                                        <option value="4">Hải Phòng</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn_apt">Find Here</button> 
-                    </form>
-                </div>
-                <!-- //form -->
-            </div><br>
+<?php  
 
-        <div class="row">
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <h4 class="card-header">Card Title</h4>
-                        <div class="card-body">
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+        $post = new Post();
+        $fm = new Format();
+
+        if (isset($_POST['style'])) {
+            $styleId = $_POST['style'];
+            if (!empty($_POST['province'])) {
+                $provinceId = $_POST['province'];
+                if (!empty($_POST['district'])) {
+                    $districtId = $_POST['district'];
+                    $getPost = $post->getPostByProvinceAndDistrict($styleId, $provinceId, $districtId);
+                } else {
+                    $getPost = $post->getPostByProvince($styleId, $provinceId);
+                }
+            } else {
+                $getPost = $post->getPostByStyle($styleId);
+            }
+        }
+    }
+?>
+    <div class="container py-xl-5 py-lg-3">    
+        <div class="row pt-4">
+            <?php 
+                $totalPost = count($getPost);
+                if ($totalPost == 0) {
+            ?>
+                <div class="col-lg-12 col-md-6 text-center mt-lg-0 mt-5">
+                    <div class="card h-100">
+                        <h4 class="card-header">Không có bài viết nào</h4>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 mb-4">
+            <?php
+                } else {
+                    for ($i=0; $i < $totalPost; $i++) { 
+            ?>
+            <div class="col-lg-4 col-md-6 text-center mt-lg-0 mt-5">
                 <div class="card h-100">
-                    <h4 class="card-header">Card Title</h4>
-                        <div class="card-body">
-                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary">Learn More</a>
-                        </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <h4 class="card-header">Card Title</h4>
+                    <h4 class="card-header"><?php echo $getPost[$i]['post_title']; ?></h4>
                     <div class="card-body">
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+                        <section class="slider">
+                            <div class="flexslider">
+                                <ul class="slides">
+                        <?php
+                            $path = array();
+                            $total_image = $getPost[$i]['number_image'];
+                            for ($k=0; $k < $total_image; $k++) { 
+                                $path[$k] = "home-renting/acc".$getPost[$i]['account_id']."/post/post".$getPost[$i]['post_id']."/"."img".$k;
+                        ?>
+                            <li><?php echo cl_image_tag($path[$k], array("height"=>250, "width"=>250, "crop"=>"scale")); ?></li>
+                        <?php } ?>
+                                </ul>
+                            </div>
+                        </section>                            
+
+                        <p class="text-left" style="color: white; font-size: 20px"><?php echo $fm->formatPrice($getPost[$i]['price']) ?></p>
+                        <p class="text-left"><?php echo $getPost[$i]['area']." m2"; ?></p>
+                        <p class="text-right"><?php echo $getPost[$i]['district_name'].", ".$getPost[$i]['province_name']; ?></p>
+                        <p class="text-left"><?php echo $fm->textShorten($getPost[$i]['post_description'], 200); ?></p>
+                        <a class="service-btn btn mt-xl-5 mt-4" href="post_detail.php?detailPostId=<?php echo $getPost[$i]['post_id']; ?>">Read More<span
+                                class="fa fa-long-arrow-right ml-2"></span></a>
                     </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Learn More</a>
+                    <div class="card-footer blog_w3icon border-top pt-2 d-flex justify-content-between">
+                        <small class="text-li">
+                            <b>Bởi: <?php echo $getPost[$i]['username']; ?></b>
+                        </small>
+                        <span>
+                            <?php echo $getPost[$i]['confirm_date']; ?>
+                        </span>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4">
-                <div class="card h-100">
-                    <h4 class="card-header">Card Title</h4>
-                    <div class="card-body">
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="btn btn-primary">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            </div>
+            <?php }} ?>
         </div>
+        <br>
     </div>
+</div>
+</div>
 <?php
     include "inc/footer.php" ;
 ?>

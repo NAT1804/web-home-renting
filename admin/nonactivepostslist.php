@@ -5,11 +5,13 @@
  ?>
  <?php 
     $post = new Post();
-    if (isset($_GET['postId']) && isset($_GET['accId'])) {
-        $acceptPost = $post->acceptPost($_GET['accId'], $_GET['postId']);
+    if (isset($_GET['accPostId']) && isset($_GET['accAccId'])) {
+      $accId = $_GET['accAccId'];
+      $postId = $_GET['accPostId'];
+      $acceptPost = $post->acceptPost($accId, $postId);
     }
     if (isset($_GET['rmPostId']) && isset($_GET['rmAccId'])) {
-        $acceptPost = $post->acceptPost($_GET['rmAccId'], $_GET['rmPostId']);
+        $removePost = $post->removePost($_GET['rmAccId'], $_GET['rmPostId']);
     }
 ?>
 <!--main content start-->
@@ -71,13 +73,14 @@
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td><span><?php echo (int)$i + 1; ?></span></td>
             <td><?php echo $showPostsNonActive[$i]['username']; ?></td>
-            <td><span class="text-ellipsis"><?php echo $showPostsNonActive[$i]['post_title']; ?></span></td>
-            <td><span class="text-ellipsis"><?php echo $showPostsNonActive[$i]['post_description']; ?></span></td>
+            <td><?php echo '#'.$showPostsNonActive[$i]['post_id']; ?></td>
+            <td><?php echo $showPostsNonActive[$i]['post_title']; ?></td>
+            <td><?php echo $showPostsNonActive[$i]['post_description']; ?></td>
             <td><span><?php echo $showPostsNonActive[$i]['update_time']; ?></span></td>
             <td><span><?php echo $showPostsNonActive[$i]['post_price']; ?></span></td>
             <td>
-              <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?postId=<?php echo $showPostsNonActive['post_id']; ?>&accId=<?php $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết nay?');" href="?rmPostId=<?php echo $showPostsNonActive['post_id']; ?>&rmAccId=<?php $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?accAccId=<?php echo $showPostsNonActive[$i]['account_id']; ?>&accPostId=<?php echo $showPostsNonActive[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn loại bỏ bài viết này?');" href="?rmPostId=<?php echo $showPostsNonActive[$i]['post_id']; ?>&rmAccId=<?php echo $showPostsNonActive[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
             </td>
           </tr>
         <?php } ?>  

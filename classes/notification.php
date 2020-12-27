@@ -24,7 +24,7 @@
         }
 
         public function showNotificationsUser($accId) {
-            $query = "SELECT * FROM `notification` WHERE account_id = ? AND reply IS NOT NULL ORDER BY id DESC";
+            $query = "SELECT * FROM `notification` WHERE account_id = ? AND reply IS NOT NULL ORDER BY reply_at DESC";
             $result = $this->db->doPreparedQuery($query, array($accId));
 
             return $result;
@@ -37,9 +37,13 @@
             return $result;
         }
 
-        public function sendNotificationToUser($accId, $reply, $type) {
-            $query = "UPDATE notification SET reply = ?, reply_at = NOW() WHERE account_id = ? AND type = ?";
-             $result = $this->db->doPreparedSql($query, array($reply, $accId, $type));
+        public function sendNotificationToUser($accId, $postId, $reply, $type) {
+            if ($postId == null) {
+                $query = "UPDATE notification SET reply = ?, reply_at = NOW() WHERE account_id = ? AND type = ? AND post_id is ?";
+            } else {
+                $query = "UPDATE notification SET reply = ?, reply_at = NOW() WHERE account_id = ? AND type = ? AND post_id = ?";
+            }
+            $result = $this->db->doPreparedSql($query, array($reply, $accId, $type, $postId));
 
             return $result;
         }

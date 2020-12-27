@@ -82,12 +82,14 @@
 						$info = "<span id='success'>Tạo tài khoản thành công</span>";
 						$message = $email." vừa đăng ký tài khoản tìm trọ";
 						$type = "A";
-            			$this->noti->addNotification($accId, $message, $type);
+						$postId = null;
+            			$this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
 					} else {
 						$info = "<span id='success'>Tạo tài khoản thành công. Chờ xác nhận từ admin để có thể đăng bài.</span>";
-						$message = $email." vừa đăng ký tài khoản cho thuê trọ đang chờ duyệt.";
+						$message = $email." đăng ký tài khoản đang chờ duyệt.";
 						$type = "A";
-            			$this->noti->addNotification($accId, $message, $type);
+						$postId = null;
+            			$this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
 					}
 	                Session::set('info-user', $info);
 	                Session::set('userEmail', $email);

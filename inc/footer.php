@@ -74,48 +74,7 @@
             </div>
         </div>
     </footer>
-    <!-- //footer -->
-    <!-- copyright -->
-    <!-- <div class="copyright-w3ls py-4">
-        <div class="container">
-            <div class="row"> -->
-                <!-- copyright -->
-                <!-- <p class="col-lg-8 copy-right-grids text-wh text-lg-left text-center mt-lg-2">© 2019 EasyAccomod. All
-                    Rights Reserved | Design by
-                    <a href="https://w3layouts.com/" target="_blank">W3layouts</a>
-                </p> -->
-                <!-- //copyright -->
-                <!-- social icons -->
-                <!-- <div class="col-lg-4 w3social-icons text-lg-right text-center mt-lg-0 mt-3">
-                    <ul>
-                        <li>
-                            <a href="#" class="rounded-circle">
-                                <span class="fa fa-facebook-f"></span>
-                            </a>
-                        </li>
-                        <li class="px-2">
-                            <a href="#" class="rounded-circle">
-                                <span class="fa fa-google-plus"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="rounded-circle">
-                                <span class="fa fa-twitter"></span>
-                            </a>
-                        </li>
-                        <li class="pl-2">
-                            <a href="#" class="rounded-circle">
-                                <span class="fa fa-dribbble"></span>
-                            </a>
-                        </li>
-                    </ul>
-                </div> -->
-                <!-- //social icons -->
-            <!-- </div>
-        </div>
-    </div> -->
-    <!-- //copyright -->
-    <!-- move top icon -->
+  
     <a href="#home" class="move-top text-center">
         <span class="fa fa-angle-double-up" aria-hidden="true"></span>
     </a>
@@ -135,8 +94,67 @@
                         }
                     });
                 } else {
-                    $('#district').html('<option value="">Chọn quận/Huyện</option>');
+                    $('#district').html('<option value="">Chọn quận/huyện</option>');
                 }
-            });         
+            });
+            $('#city').on('click', function() {
+                var cityId = $(this).val();
+                if(cityId) {
+                    $.ajax({
+                        type:'POST',
+                        url:'classes/districtController.php',
+                        data:'cityId='+cityId,
+                        success:function(html) {
+                            $('#district').html(html);
+                        }
+                    });
+                } else {
+                    $('#district').html('<option value="">Chọn quận/huyện</option>');
+                }
+            });
+            $('#elecwater').on('change', function(){
+                var elecwaterId = $(this).val();
+                if (elecwaterId == 0) {
+                    $('#elec').val('1864');
+                    $('#water').val('9442');
+                    $('#elec').prop('readonly', true);
+                    $('#water').prop('readonly', true);
+                } else if (elecwaterId == 1) {
+                    $('#elec').val('');
+                    $('#water').val('');
+                    $('#elec').prop('readonly', false);
+                    $('#water').prop('readonly', false);
+                } else {
+                    $('#elec').val('');
+                    $('#water').val('');
+                    $('#elec').prop('readonly', true);
+                    $('#water').prop('readonly', true);
+                }
+            });
+            $('#time').blur(function() {
+                var t = parseFloat($('#time').val());
+                if (t < 7) {
+                    $('#time').val('');
+                    //$('#price').val('Thời gian tối thiểu là 7 ngày');
+                } else {
+                    var pr =t * 10000;
+                    $('#price').val(pr);
+                }
+            });
+        });
+    </script>
+    <link href="public/css/flexslider.css" rel='stylesheet' type='text/css' />
+    <script defer src="public/js/jquery.flexslider.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            SyntaxHighlighter.all();
+        });
+        $(window).load(function(){
+            $('.flexslider').flexslider({
+                animation: "slide",
+                start: function(slider){
+                    $('body').removeClass('loading');
+                }
+            });
         });
     </script>

@@ -321,7 +321,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label"></label>
                         <div class="col-sm-6">
-                            <input type="submit" name="submit" value="Đăng">
+                            <input type="submit" name="submit" value="Đăng bài" style="width: 100%;">
                         </div>
                     </div>
                 </form>

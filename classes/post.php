@@ -5,6 +5,7 @@
     include_once ($file_path."/../vendor/autoload.php");
     include_once ($file_path."/../config/config-cloud.php");
     include_once "notification.php";
+    include_once "account.php";
 ?>
 
 <?php 
@@ -13,12 +14,14 @@
         private $db;
         private $fm;
         private $noti;
+        private $acc;
 
         public function __construct()
         {
             $this->db = new Database();
             $this->fm = new Format();
             $this->noti = new Notification();
+            $this->acc = new Account();
         }
 
         public function showPostsActive() {
@@ -48,7 +51,7 @@
 
             $reply = "Bài đăng #".$postId." đã được duyệt.";
             $type = "P";
-            $this->noti->sendNotificationToUser($accId, $reply, $type);
+            $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
             return $result;
         }
 
@@ -73,8 +76,29 @@
         }
 
         public function getPostById($postId) {
-            $query = "SELECT p.*, a.*, m.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id WHERE p.post_id = ?";
+            $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE p.post_id = ?";
             $result = $this->db->doPreparedQuery($query, array($postId));
+
+            return $result;
+        }
+
+        public function getPostByStyle($styleId) {
+            $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE s.style_id = ?";
+            $result = $this->db->doPreparedQuery($query, array($styleId));
+
+            return $result;
+        }
+
+        public function getPostByProvince($styleId, $provinceId) {
+            $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE s.style_id = ? AND m.province_id = ?";
+            $result = $this->db->doPreparedQuery($query, array($styleId, $provinceId));
+
+            return $result;
+        }
+
+        public function getPostByProvinceAndDistrict($styleId, $provinceId, $districtId) {
+            $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE s.style_id = ? AND m.district_id = ? AND m.province_id = ?";
+            $result = $this->db->doPreparedQuery($query, array($styleId, $districtId, $provinceId));
 
             return $result;
         }
@@ -135,27 +159,37 @@
                 $alert = "<span id='error'>Chưa cung cấp đủ hình ảnh (ít nhất 3 ảnh)</span>";
                 return $alert;
             }
-            $query = "INSERT INTO post(account_id,post_title, post_description, update_time, post_price, status, `time`, confirm_date, expiry_date) VALUES(?,?,?,now(),?,?,?,now(), DATE_ADD(NOW(), INTERVAL `time` DAY))";
-            $result = $this->db->doPreparedSql($query, array($accId,$title,$description,$price,1,$time));
+
+
+            $checkRoleQuery = $this->acc->roleAccById($accId);
+            if ($checkRoleQuery[0]['role'] == 0) {
+                $status = 1;
+                $query = "INSERT INTO post(account_id,post_title, post_description, update_time, post_price, status, `time`, confirm_date, expiry_date) VALUES(?,?,?,now(),?,?,?,now(), DATE_ADD(NOW(), INTERVAL `time` DAY))";
+            } else {
+                $status = 0;
+                $query = "INSERT INTO post(account_id,post_title, post_description, update_time, post_price, status, `time`) VALUES(?,?,?,now(),?,?,?)";
+            }
+            
+            $result = $this->db->doPreparedSql($query, array($accId,$title,$description,$price,$status,$time));
 
             if($result == 0) {
-                $alert = "<span id='error'>Thêm bài đăng bị lỗi</span>";
+                $alert = "<span id='error'>Thêm bài đăng bị lỗi 1</span>";
                 return $alert;
             }
 
-            $query2 = "SELECT post_id from post ORDER BY post_id DESC LIMIT 1";
+            $query2 = "SELECT post_id FROM post ORDER BY post_id DESC LIMIT 1";
             $result2 = $this->db->doPreparedQuery($query2, array());
             if(!empty($result2)) {
                 $postId = $result2[0]['post_id'];
             } else {
-                $alert = "<span id='error'>Thêm bài đăng bị lỗi</span>";
+                $alert = "<span id='error'>Thêm bài đăng bị lỗi 2</span>";
                 return $alert;
             }
 
-            $query3 = "INSERT INTO motel(post_id,house_number,street,province_id,district_id,close_place,number_of_rooms,area,price,owner,bath_type,water_heater,kitchen,air_conditioner,balcony,electric_water,electric_price,water_price,style_id,number_image) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            $result3 = $this->db->doPreparedSql($query3, array((int)$postId,$numberhouse,$street,$city,$district,$close,$numberroom,$area,$rentprice,$owner,$bath,$waterheater,$kitchen,$air,$balcony,$elecwater,$elec,$water,$style,$totalImage));
+            $query3 = "INSERT INTO motel(motel_id,post_id,house_number,street,province_id,district_id,close_place,number_of_rooms,area,price,owner,bath_type,water_heater,kitchen,air_conditioner,balcony,electric_water,electric_price,water_price,style_id,number_image) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $result3 = $this->db->doPreparedSql($query3, array((int)$postId,(int)$postId,$numberhouse,$street,$city,$district,$close,$numberroom,$area,$rentprice,$owner,$bath,$waterheater,$kitchen,$air,$balcony,$elecwater,$elec,$water,$style,$totalImage));
             if($result3 == 0) {
-                $alert = "<span id='error'>Thêm bài đăng bị lỗi</span>";
+                $alert = "<span id='error'>Thêm bài đăng bị lỗi 3</span>";
                 return $alert;
             }
 
@@ -167,8 +201,14 @@
                 \Cloudinary\Uploader::upload($file_tmp, array("public_id" => $name, "folder" => $folder));
             }
 
-            $alert = "<span id='success'>Thêm bài đăng hợp lệ</span>";
-            $message = "Thêm bài đăng mới #".$postId;
+            
+            if ($status == 1) {
+                $alert = "<span id='success'>Thêm bài đăng hợp lệ</span>";
+                $message = "Thêm bài đăng mới #".$postId;
+            } else {
+                $alert = "<span id='success'>Thêm bài đăng hợp lệ đang chờ duyệt</span>";
+                $message = "Thêm bài đăng mới #".$postId." đang chờ duyệt";
+            }
             $type = "P";
             $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
             $_POST = array();

@@ -4,6 +4,10 @@
     include_once '../classes/notification.php';
     require_once '../helpers/format.php';
 ?>
+<?php 
+    $fm = new Format();
+    $showNotificationsAdmin = $noti->showNotificationsAdmin();
+?>
 <!--main content start-->
 <section id="main-content">
 	<section class="wrapper">
@@ -17,10 +21,10 @@
                             Soạn thư
                         </a>
                         <ul class="nav nav-pills nav-stacked mail-nav">
-                            <li class="active"><a href="inbox.php"> <i class="fa fa-inbox"></i>Thông báo<span class="label label-danger pull-right inbox-notification">9</span></a></li>
+                            <li class="active"><a href="inbox.php"> <i class="fa fa-inbox"></i>Thông báo<span class="label label-danger pull-right inbox-notification"><?php echo count($showNotificationsAdmin); ?></span></a></li>
                             <li><a href="#"> <i class="fa fa-envelope-o"></i>Thư đã gửi</a></li>
                             <li><a href="#"> <i class="fa fa-certificate"></i>Quan trọng</a></li>
-                            <li><a href="#"> <i class="fa fa-file-text-o"></i>Bản nháp<span class="label label-info pull-right inbox-notification">123</span></a></a></li>
+                            <li><a href="#"> <i class="fa fa-file-text-o"></i>Bản nháp<span class="label label-info pull-right inbox-notification"></span></a></a></li>
                             <li><a href="#"> <i class="fa fa-trash-o"></i>Thùng rác</a></li>
                         </ul>
                     </div>
@@ -53,10 +57,6 @@
                     </div>
                 </section>
             </div>
-            <?php 
-                $fm = new Format();
-                $showNotificationsAdmin = $noti->showNotificationsAdmin();
-            ?>
             <div class="col-sm-9 mail-w3agile">
                 <section class="panel">
                     <header class="panel-heading wht-bg">
@@ -153,148 +153,23 @@
                                             echo "nonactiveposterslist.php";
                                             break;
                                         case "P":
-                                            echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
-                                            break;
+                                            if ($showNotificationsAdmin[$i]['role'] == 0) {
+                                                echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
+                                                break;
+                                            } else {
+                                                echo "nonactivepostslist.php";
+                                                break;
+                                            }
                                     }                                
                                  ?>"><?php echo $showNotificationsAdmin[$i]['message']; ?></a>
                             </td>
                             <!-- <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td> -->
                             <td class="view-message">
-                                <a href=""><?php echo $showNotificationsAdmin[$i]['reply']; ?></a>
+                                <a href=""><?php echo $showNotificationsAdmin[$i]['reply']." ".$showNotificationsAdmin[$i]['reply_at']; ?></a>
                             </td>
                             <td class="view-message  text-right"><?php echo $fm->timeInAgo($showNotificationsAdmin[$i]['create_at']); ?></td>
                         </tr>
                         <?php } ?>
-                        <tr class="unread">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show"><a href="#">Mr Bean</a></td>
-                            <td class="view-message"><a href="#">Hi Bro, Lorem ipsum dolor imit</a></td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">Jan 11</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show"><a href="#">Jonathan Smith</a></td>
-                            <td class="view-message"><a href="#">Lorem ipsum dolor sit amet</a></td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">March 15</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show"><a href="#">Facebook</a></td>
-                            <td class="view-message"><a href="#">Dolor sit amet, consectetuer adipiscing</a></td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">June 01</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                            <td class="view-message dont-show"><a href="#">Tasi man <span class="label label-danger pull-right">urgent</span></a></td>
-                            <td class="view-message"><a href="#">Lorem ipsum dolor sit amet</a></td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">May 2</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                            <td class="view-message dont-show"><a href="#">Facebook</a></td>
-                            <td class="view-message"><a href="#">Dolor sit amet, consectetuer adipiscing</a></td>
-                            <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                            <td class="view-message text-right">March 14</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                            <td class="view-message dont-show">Bafent</td>
-                            <td class="view-message">Lorem ipsum dolor sit amet</td>
-                            <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                            <td class="view-message text-right">December 19</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show">Facebook <span class="label label-success pull-right">megazine</span></td>
-                            <td class="view-message view-message">Dolor sit amet, consectetuer adipiscing</td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">March 04</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show">Dorimon</td>
-                            <td class="view-message view-message">Lorem ipsum dolor sit amet</td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">June 13</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show">Facebook <span class="label label-info pull-right">family</span></td>
-                            <td class="view-message view-message">Dolor sit amet, consectetuer adipiscing</td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">March 24</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                            <td class="view-message dont-show">Mogli Marion</td>
-                            <td class="view-message">Lorem ipsum dolor sit amet</td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">February 09</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star inbox-started"></i></td>
-                            <td class="dont-show">Facebook</td>
-                            <td class="view-message">Dolor sit amet, consectetuer adipiscing</td>
-                            <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                            <td class="view-message text-right">May 14</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="view-message dont-show">Samual</td>
-                            <td class="view-message">Lorem ipsum dolor sit amet</td>
-                            <td class="view-message inbox-small-cells"><i class="fa fa-paperclip"></i></td>
-                            <td class="view-message text-right">February 25</td>
-                        </tr>
-                        <tr class="">
-                            <td class="inbox-small-cells">
-                                <input type="checkbox" class="mail-checkbox">
-                            </td>
-                            <td class="inbox-small-cells"><i class="fa fa-star"></i></td>
-                            <td class="dont-show">Facebook</td>
-                            <td class="view-message view-message">Dolor sit amet, consectetuer adipiscing</td>
-                            <td class="view-message inbox-small-cells"></td>
-                            <td class="view-message text-right">March 14</td>
-                        </tr>
                         </tbody>
                         </table>
 

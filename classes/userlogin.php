@@ -25,9 +25,9 @@
 
 			if (empty($_POST['remember'])) {
 				if (isset($_COOKIE['useremail']))
-					setcookie("email", "");
+					setcookie("useremail", "");
 				if (isset($_COOKIE['password']))
-					setcookie("pass", "");
+					setcookie("password", "");
 			}
 
 			if (empty($useremail) || empty($password)) {

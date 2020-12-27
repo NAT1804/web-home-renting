@@ -39,7 +39,6 @@
     <link href="public/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <!-- Bootstrap-Core-CSS -->
     <link href="public/css/style.css" rel='stylesheet' type='text/css' />
-    <!-- <link href="public/css/style2.css" rel='stylesheet' type='text/css' /> -->
     <!-- <link href="public/css/style-responsive.css" rel='stylesheet' type='text/css' /> -->
     <!-- Style-CSS -->
     <link href="public/css/font-awesome.css" rel="stylesheet">
@@ -73,9 +72,9 @@
                         <input type="checkbox" id="drop" />
                         <ul class="menu">
                             <li><a href="index.php">Trang chủ</a></li>
-                            <li><a href="#">Tìm kiếm</li>
-                            <li><a href="#blog">Bài viết</a></li>
-                            <li><a href="#contact">Liên hệ</a></li>
+                            <li><a href="index.php#home">Tìm kiếm</li>
+                            <li><a href="index.php#post">Bài viết</a></li>
+                            <li><a href="index.php#contact">Liên hệ</a></li>
                             <?php 
                                 $noti = new Notification();
                                 $fm = new Format();
@@ -124,7 +123,7 @@
                                     </a>
                                     <!-- <input type="checkbox" id="drop-2" /> -->
                                     <ul class="dropdown-menu extended logout" style="background-color: black;">
-                                        <li><a href="#"><i class="fa fa-caret-square-o-right"></i>&nbsp;Thông báo</a></li>
+                                        <li><a href="#"><i class="fa fa-caret-square-o-right"></i>&nbsp;Danh sách bài đăng</a></li>
                                         <?php if ($_SESSION["role"] == 1) { ?>
                                         <li><a href="upload_post.php" class="drop-text"><i class="fa fa-wpforms"></i>&nbsp;Đăng bài viết</a></li>
                                         <?php } ?>
