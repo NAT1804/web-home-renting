@@ -150,15 +150,9 @@
                     <img src="public/images/about.jpg" alt="about" class="img-fluid" />
                 </div>
                 <div class="col-lg-6 pr-xl-5 mt-xl-4 mt-lg-0 mt-4">
-                    <h3 class="title-sub mb-4">The best place to find the <span>house you want.</span></h3>
-                    <p class="sub-para">Donec consequat sapien ut leo cursus rhoncus. Nullam dui mi, vulputate ac metus
-                        at, semper
-                        varius orci. Nulla accumsan ac elit in congue. Class aptent taciti sociosqu ad litora torquent
-                        per conubia.</p>
-                    <p class="sub-para pt-4 mt-4 border-top">Donec consequat sapien ut leo cursus rhoncus. Nullam dui
-                        mi, vulputate ac metus
-                        at, semper varius orci. Nulla accumsan ac elit in congue. Class aptent taciti sociosqu ad
-                        litora torquent per.</p>
+                    <h3 class="title-sub mb-4">Nơi bạn tìm kiếm<span>những ngôi nhà ưng ý nhất</span></h3>
+                    <p class="sub-para">Giúp những căn nhà của bạn được nhiều người biết đến hơn.</p>
+                    <p class="sub-para pt-4 mt-4 border-top">Chúng tôi sẽ giúp bạn thực hiện những cuộc giao dịch hoàn hảo nhất.</p>
                 </div>
             </div>
         </div>

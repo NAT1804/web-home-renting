@@ -24,8 +24,14 @@
             $this->acc = new Account();
         }
 
+        public function showPostOfAccId($accId) {
+            $query = "SELECT * FROM post p INNER JOIN account a ON a.account_id = p.account_id WHERE p.account_id = ? ORDER BY post_id DESC";
+            $result = $this->db->doPreparedQuery($query, array($accId));
+            return $result;
+        }
+
         public function showPostsActive() {
-            $query = "SELECT * FROM activepostslist ORDER BY post_id DESC";
+            $query = "SELECT * FROM activepostslist WHERE expiry_date > NOW() ORDER BY post_id DESC";
             $result = $this->db->doPreparedQuery($query, array());
 
             return $result;
@@ -40,6 +46,13 @@
 
         public function showPostsRemoved() {
             $query = "SELECT * FROM removedpostslist ORDER BY post_id DESC";
+            $result = $this->db->doPreparedQuery($query, array());
+
+            return $result;
+        }
+
+        public function showPostsOutDate() {
+            $query = "SELECT * FROM activepostslist WHERE expiry_date < NOW() ORDER BY post_id DESC";
             $result = $this->db->doPreparedQuery($query, array());
 
             return $result;

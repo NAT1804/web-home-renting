@@ -22,5 +22,19 @@
 
 			return $result;
 		}
+
+		public function numberOfUser() {
+			$query = "SELECT * FROM account WHERE role != ?";
+			$result = $this->db->doPreparedQuery($query, array(0));
+
+			return $result;
+		}
+
+		public function numberOfAdmin() {
+			$query = "SELECT * FROM account WHERE role = ?";
+			$result = $this->db->doPreparedQuery($query, array(0));
+
+			return $result;
+		}
 	}
 ?>

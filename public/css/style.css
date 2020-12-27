@@ -1802,6 +1802,10 @@ p.dont-do a:hover,
     width: 100%; 
     font-size: 18px; 
     font-family: 'Poppins', sans-serif;
+    background-color: #ccffcc;
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #fff;
 }
 
 #error {
@@ -1809,6 +1813,10 @@ p.dont-do a:hover,
     width: 100%; 
     font-size: 18px; 
     font-family: 'Poppins', sans-serif;
+    background-color: #ffe6e6;
+    text-align: center;
+    border-radius: 5px;
+    border: solid 1px #fff;
 }
 
 #notice-error {
@@ -1825,4 +1833,21 @@ p.dont-do a:hover,
     border: solid 1px #fff;
 }
 
-
+.panel-heading {
+    position: relative;
+    height: 57px;
+    line-height: 57px;
+    letter-spacing: 0.2px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 400;
+    padding: 0 16px;
+    background:#ddede0;
+   border-top-right-radius: 2px;
+   border-top-left-radius: 2px; 
+    text-transform: uppercase;
+    text-align: center;
+}
+.panel {
+    border: none ! important;
+}

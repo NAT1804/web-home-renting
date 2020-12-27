@@ -17,7 +17,7 @@
                 <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">Login Now</h3>
                 <form action="login.php" method="post">
                     <!-- //in ra thông báo -->
-                    <div class="form-group" id="notice-success">
+                    <div class="form-group">
                         <?php 
                             if(isset($_SESSION['info-user'])) echo $_SESSION['info-user'];
                         ?>

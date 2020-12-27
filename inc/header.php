@@ -95,7 +95,11 @@
                                     </li>
                                     <?php for ($i=0; $i<count($showNotificationsUser); $i++) { ?>
                                     <li>
-                                        <a href="#">
+                                        <a href="<?php 
+                                            if (!empty($showNotificationsUser[$i]['post_id'])) {
+                                                echo "post_detail.php?detailPostId=".$showNotificationsUser[$i]['post_id'];
+                                            }
+                                         ?>">
                                             <span class="message">
                                                 <?php echo $showNotificationsUser[$i]['reply']; ?>
                                             </span>
@@ -119,8 +123,8 @@
                                     </a>
                                     <!-- <input type="checkbox" id="drop-2" /> -->
                                     <ul class="dropdown-menu extended logout" style="background-color: black;">
-                                        <li><a href="#"><i class="fa fa-caret-square-o-right"></i>&nbsp;Danh sách bài đăng</a></li>
                                         <?php if ($_SESSION["role"] == 1) { ?>
+                                        <li><a href="my_post.php"><i class="fa fa-caret-square-o-right"></i>&nbsp;Danh sách bài đăng</a></li>
                                         <li><a href="upload_post.php" class="drop-text"><i class="fa fa-wpforms"></i>&nbsp;Đăng bài viết</a></li>
                                         <?php } ?>
                                         <li><a href="logout.php"><i class="fa fa-key"></i>&nbsp;Đăng xuất</a></li>

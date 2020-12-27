@@ -20,7 +20,7 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         $userId = Session::get('userId');
         if ($userId == false) {
-            $info = "Bạn cần đăng nhập để thêm bình luận";
+            $info = "<span id='success'>Bạn cần đăng nhập để thêm bình luận</span>";
             Session::set('info-user', $info);
             header('Location: login.php');
             exit();
@@ -108,6 +108,9 @@
 
                     <div class="card my-4">
                         <h5 class="card-header">Đánh giá:</h5>
+                        <?php  
+                            if (isset($addComment)) echo $addComment;
+                        ?>
                         <div class="card-body">
                             <form action="" method="post">
                                 <fieldset class="form-group" data-role="control-group">
@@ -129,7 +132,6 @@
                             </form>
                         </div>
                     </div>
-
                     <div class="comment-box">
                         <!--Comment box -->
                         <?php 

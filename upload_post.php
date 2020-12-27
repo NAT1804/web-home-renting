@@ -15,7 +15,7 @@
             <div class="modal-body mt-md-2 mt-5">
                 <h3 class="title-w3 mb-5 text-center text-wh font-weight-bold">Đăng bài</h3>
                 <form action="upload_post.php" class="form-horizontal bucket-form" method="post" enctype="multipart/form-data">
-                    <div class="form-group" id="notice-error">
+                    <div class="form-group" >
                         <label class=" col-sm-3 control-label"></label>
                         <div class="col-sm-12" style="text-align: center;">
                             <?php 
