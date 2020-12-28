@@ -99,7 +99,7 @@
                     <div class="card" id="#cd">
                         <div class="card-header m-0">
                             <h5 class="blog-title card-title m-0">
-                                <a href="single.html"><?php echo $showNewPost[$i]['post_title'] ?></a>
+                                <a href="single.html"><?php echo $fm->textShorten($showNewPost[$i]['post_title'], 30); ?></a>
                             </h5>
                         </div>
                         <div class="card-body">

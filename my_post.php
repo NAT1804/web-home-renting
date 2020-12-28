@@ -2,11 +2,19 @@
 <?php include_once "classes/post.php"; ?>
 <?php 
     $post = new Post();
+    // cap nhat trang thai
     if (isset($_GET['rtPostId']) && isset($_GET['rtAccId'])) {
         $updateStatusPost = $post->updateStatusPost($_GET['rtAccId'], $_GET['rtPostId']);
     }
+
+    // sua bai viet
     if (isset($_GET['editPostId']) && isset($_GET['editAccId'])) {
-        $editRequiredPost = $post->editRequiredPost($_GET['editAccId'], $_GET['editPostId']);
+        $editPost = $post->editPost($_GET['editAccId'], $_GET['editPostId']);
+    }
+
+    // dang lại
+    if (isset($_GET['restorePostId']) && isset($_GET['restoreAccId'])) {
+        $requestPost = $post->requestPost($_GET['restoreAccId'], $_GET['restorePostId']);
     }
 ?>
 <!--main content start-->
@@ -24,6 +32,8 @@
       </div>
       <div class="col-sm-4">
         <?php if(isset($updateStatusPost)) echo $updateStatusPost; ?>
+        <?php if(isset($editPost)) echo $editPost; ?>
+        <?php if(isset($requestPost)) echo $requestPost; ?>
       </div>
       <div class="col-sm-3">
       </div>
@@ -47,6 +57,7 @@
         <tbody>
         <?php 
         	$post = new Post();
+            $fm = new Format();
         	$accId = Session::get('userId');
             $showPostOfAccId = $post->showPostOfAccId($accId);
 
@@ -55,15 +66,22 @@
           <tr>
             <td><span><?php echo (int)$i + 1; ?></span></td>
             <td><?php echo '#'.$showPostOfAccId[$i]['post_id']; ?></td>
-            <td><?php echo $showPostOfAccId[$i]['post_title']; ?></td>
-            <td><span><?php echo $showPostOfAccId[$i]['post_description']; ?></span></td>
-            <td><span><?php echo $showPostOfAccId[$i]['confirm_date']; ?></span></td>
-            <td><span><?php echo $showPostOfAccId[$i]['expiry_date']; ?></span></td>
+            <td><?php echo $fm->textShorten($showPostOfAccId[$i]['post_title'], 50); ?></td>
+            <td><span><?php echo $fm->textShorten($showPostOfAccId[$i]['post_description'], 50); ?></span></td>
+            <td><span><?php 
+                echo ($showPostOfAccId[$i]['status'] != 2) ? ((empty($showPostOfAccId[$i]['confirm_date'])) ? "Chưa được duyệt" : $showPostOfAccId[$i]['confirm_date']) : "Đã duyệt"; 
+                ?>   
+                </span></td>
+            <td><span><?php echo ($showPostOfAccId[$i]['status'] != 2) ? $showPostOfAccId[$i]['expiry_date'] : "Bị loại"; ?></span></td>
             <td><span><?php echo ($showPostOfAccId[$i]['rental_status'] == 0) ? "Chưa thuê" : "Đã thuê"; ?></span></td>
-            <td><span><?php echo $showPostOfAccId[$i]['post_price']; ?></span></td>
+            <td><span><?php echo ($showPostOfAccId[$i]['status'] != 2) ? $fm->format_currency($showPostOfAccId[$i]['post_price']) : "0"; ?></span></td>
             <td>
+                <?php if ($showPostOfAccId[$i]['status'] == 2) { ?>
+                <a href="?restorePostId=<?php echo $showPostOfAccId[$i]['post_id']; ?>&restoreAccId=<?php echo $showPostOfAccId[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-active">Đăng lại</i></a>
+                <?php } ?>
+                <a href="my_post_details.php?detailPostId=<?php echo $showPostOfAccId[$i]['post_id']; ?>&detailAccId=<?php echo $showPostOfAccId[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-active">Chi tiết</i></a>
             	<?php if(empty($showPostOfAccId[$i]['confirm_date'])) { ?>
-				<a onclick="return confirm('Gửi thông báo đến admin yêu cầu sửa bài viết?');" href="?editPostId=<?php echo $showPostOfAccId[$i]['post_id']; ?>&editAccId=<?php echo $showPostOfAccId[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Sửa</i></a>
+				<a href="edit_my_post.php?editPostId=<?php echo $showPostOfAccId[$i]['post_id']; ?>&editAccId=<?php echo $showPostOfAccId[$i]['account_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Sửa</i></a>
 				<?php } ?>
 
 				<?php if($showPostOfAccId[$i]['status'] == 1 && $showPostOfAccId[$i]['rental_status'] == 0) { ?>
@@ -102,7 +120,6 @@
 </section>
 </section>
 </div>
-
 <!--main content end-->
 
 <?php include "inc/footer.php"; ?>

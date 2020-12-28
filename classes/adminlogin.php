@@ -52,7 +52,7 @@
 								Session::set('adminId', $check[0]['account_id']);
 								Session::set('adminUsername', $check[0]['username']);
 								Session::set('adminEmail', $check[0]['email']);
-								Session::set('adminPass', md5($check[0]['password']));
+								//Session::set('adminPass', md5($check[0]['password']));
 								header('Location: index.php');
 							} else {
 								$alert = "<span id='error'>Bạn không có quyền đăng nhập</span>";

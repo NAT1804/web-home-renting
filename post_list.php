@@ -16,10 +16,21 @@
                     $districtId = $_POST['district'];
                     $getPost = $post->getPostByProvinceAndDistrict($styleId, $provinceId, $districtId);
                 } else {
-                    $getPost = $post->getPostByProvince($styleId, $provinceId);
+                    if(!empty($_POST['area'])) {
+                        $area = $_POST['area'];
+                        $getPost = $post->getPostByProvinceAndArea($styleId, $provinceId, $area);
+                    } else {
+                        $getPost = $post->getPostByProvince($styleId, $provinceId);
+                    }    
                 }
             } else {
-                $getPost = $post->getPostByStyle($styleId);
+                if (!empty($_POST['price'])) {
+                    $price = $_POST['price'];
+                    $getPost = $post->getPostByPrice($styleId, $price); 
+                } else {
+                    $getPost = $post->getPostByStyle($styleId);    
+                }
+                
             }
         }
     }
@@ -41,7 +52,7 @@
             ?>
             <div class="col-lg-4 col-md-6 text-center mt-lg-0 mt-5">
                 <div class="card h-100">
-                    <h4 class="card-header"><?php echo $getPost[$i]['post_title']; ?></h4>
+                    <h4 class="card-header"><?php echo $fm->textShorten($getPost[$i]['post_title'], 50); ?></h4>
                     <div class="card-body">
                         <section class="slider">
                             <div class="flexslider">

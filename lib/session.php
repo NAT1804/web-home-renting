@@ -45,7 +45,11 @@
         }
 
         public static function destroy(){
-            session_destroy();
+            //session_destroy();
+            unset($_SESSION["adminlogin"]);
+            unset($_SESSION["adminId"]); 
+            unset($_SESSION["adminUsername"]);
+            unset($_SESSION["adminEmail"]);
             header("Location: login.php");
         }
         // xóa or hủy phiên làm việc

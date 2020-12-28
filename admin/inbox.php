@@ -157,10 +157,12 @@
                                                 echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
                                                 break;
                                             } else {
-                                                echo "nonactiveposterslist.php";
+                                                echo "nonactivepostslist.php";
                                                 break;
                                             }
                                         case "R":
+                                            echo "outdatepostslist.php";
+                                                break;
                                         case "O":
                                             if ($showNotificationsAdmin[$i]['role'] == 0) {
                                                 echo "editpost.php?editPostId=".$showNotificationsAdmin[$i]['post_id'];
@@ -171,6 +173,9 @@
                                             }
                                         case "C":
                                             echo "commentlist.php";
+                                            break;
+                                        case "V":
+                                            echo "removedpostslist.php";
                                             break;
                                     }                                
                                  ?>"><?php echo $showNotificationsAdmin[$i]['message']; ?></a>

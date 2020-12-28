@@ -74,9 +74,9 @@
             }
         }
 
-        public function removePost($accId, $posId){
+        public function removePost($accId, $postId){
             $query = "UPDATE post SET status = ? WHERE post_id = ?";
-            $result = $this->db->doPreparedSql($query, array(2, $posId));
+            $result = $this->db->doPreparedSql($query, array(2, $postId));
 
             $reply = "Bài đăng #".$postId." đã bị loại bỏ.";
             $type = "P";
@@ -107,7 +107,7 @@
         }
 
         public function updateStatusPost($accId, $postId) {
-            $query = "UPDATE post SET confirm_date = now(), rental_status = ? WHERE post_id = ?";
+            $query = "UPDATE post SET expiry_date = now(), rental_status = ? WHERE post_id = ?";
             $result = $this->db->doPreparedSql($query, array(1, $postId));
 
             $message = "Cập nhật trạng thái đã thuê của bài viết #".$postId;
@@ -122,15 +122,46 @@
             }
         }
 
-        public function editRequiredPost($accId, $postId){
-            $message = "Yêu cầu chỉnh sửa bài viết #".$postId;
+        public function editPost($accId, $postId){
+
+            $message = "Sửa bài đăng #".$postId;
             $type = "O";
             $result = $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
             if (!empty($result)) {
-                $alert = "<span id='success'>Gửi yêu cầu thành công</span>";
+                $alert = "<span id='success'>Sửa bài đăng thành công</span>";
                 return $alert;
             } else {
-                $alert = "<span id='error'>Gửi yêu cầu thất bại</span>";
+                $alert = "<span id='error'>Sửa bài đăng thất bại</span>";
+                return $alert;
+            }
+        }
+
+        public function requestPost($accId, $postId){
+
+            $message = "Muốn đăng lại #".$postId;
+            $type = "V";
+            $result = $this->noti->addNotificationToAdmin($accId, $postId, $message, $type);
+            if (!empty($result)) {
+                $alert = "<span id='success'>Đăng lại thành công chờ admin duyệt</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Đăng lại thất bại</span>";
+                return $alert;
+            }
+        }
+
+        public function adminRestorePost($accId, $postId) {
+            $query = "UPDATE post SET status = ?, confirm_date = NOW(), expiry_date = DATE_ADD(NOW(), INTERVAL time DAY) WHERE post_id = ?";
+            $result = $this->db->doPreparedSql($query, array(1, $postId));
+
+            $reply = "Bài đăng #".$postId." đã được duyệt.";
+            $type = "V";
+            $this->noti->sendNotificationToUser($accId, $postId, $reply, $type);
+            if (!empty($result)) {
+                $alert = "<span id='success'>Duyệt bài thành công</span>";
+                return $alert;
+            } else {
+                $alert = "<span id='error'>Duyệt bài thất bại</span>";
                 return $alert;
             }
         }
@@ -159,6 +190,64 @@
         public function getPostByProvinceAndDistrict($styleId, $provinceId, $districtId) {
             $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE s.style_id = ? AND m.district_id = ? AND m.province_id = ?";
             $result = $this->db->doPreparedQuery($query, array($styleId, $districtId, $provinceId));
+
+            return $result;
+        }
+
+        public function getPostByPrice($styleId, $price) {
+            $start;
+            $end;
+            switch ($price) {
+                case 1:
+                    $start = 0;
+                    $end = 1000000; 
+                    break;
+                case 2:
+                    $start = 1000000;
+                    $end = 2000000;
+                    break;
+                case 3:
+                    $start = 2000000;
+                    $end = 3000000;
+                    break;
+                case 4:
+                    $start = 3000000;
+                    $end = 4000000;
+                    break;
+                case 5:
+                    $start = 4000000;
+                    $end = 400000000;
+                    break;    
+            } 
+            $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE s.style_id = ? AND m.price > ? AND m.price < ?";
+            $result = $this->db->doPreparedQuery($query, array($styleId, $start, $end));
+
+            return $result;
+        }
+        
+        public function getPostByProvinceAndArea($styleId, $provinceId, $area) {
+            $start;
+            $end;
+            switch ($area) {
+                case 1:
+                    $start = 0;
+                    $end = 20; 
+                    break;
+                case 2:
+                    $start = 20;
+                    $end = 30;
+                    break;
+                case 3:
+                    $start = 30;
+                    $end = 50;
+                    break;
+                case 4:
+                    $start = 50;
+                    $end = 2000;
+                    break;   
+            }
+            $query = "SELECT p.*, a.*, m.*, s.*, pr.*, d.* FROM post p INNER JOIN account a ON a.account_id = p.account_id INNER JOIN motel m ON m.post_id = p.post_id INNER JOIN style s ON s.style_id = m.style_id INNER JOIN province pr ON pr.province_id = m.province_id INNER JOIN district d ON d.district_id = m.district_id WHERE s.style_id = ? AND m.province_id = ? AND m.price > ? AND m.price < ?";
+            $result = $this->db->doPreparedQuery($query, array($styleId, $provinceId, $start, $end));
 
             return $result;
         }

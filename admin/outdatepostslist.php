@@ -59,6 +59,7 @@
             <th>Mô tả</th>
             <th>Ngày đăng bài</th>
             <th>Ngày hết hạn</th>
+            <th>Trạng thái</th>
 
             <th style="width:30px;"></th>
           </tr>
@@ -74,13 +75,15 @@
             <td><span><?php echo (int)$i + 1; ?></span></td>
             <td><?php echo $showPostsOutDate[$i]['username']; ?></td>
             <td><?php echo '#'.$showPostsOutDate[$i]['post_id']; ?></td>
-            <td><?php echo $showPostsOutDate[$i]['post_title']; ?></td>
-            <td><?php echo $showPostsOutDate[$i]['post_description']; ?></td>
+            <td><?php echo $fm->textShorten($showPostsOutDate[$i]['post_title'], 30); ?></td>
+            <td><?php echo $fm->textShorten($showPostsOutDate[$i]['post_description'], 50); ?></td>
             <td><span><?php echo $showPostsOutDate[$i]['update_time']; ?></span></td>
             <td><span><?php echo $showPostsOutDate[$i]['expiry_date']; ?></span></td>
+            <td><span><?php echo ($showPostsOutDate[$i]['rental_status'] == 0) ? "Chưa thuê" : "Được thuê"; ?></span></td>
             <td>
-              <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?accAccId=<?php echo $showPostsOutDate[$i]['account_id']; ?>&accPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn xoá bài viết này?');" href="?delPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text">Xóa</i></a>
+                <a onclick="return confirm('Bạn chắc chắn duyệt bài viết này?');" href="?accAccId=<?php echo $showPostsOutDate[$i]['account_id']; ?>&accPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Gia hạn</i></a>
+                <a onclick="return confirm('Bạn chắc chắn muốn xoá bài viết này?');" href="?delPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text">Xóa</i></a>
+                <a href="editpost.php?editPostId=<?php echo $showPostsOutDate[$i]['post_id']; ?>" class="active" ui-toggle-class=""><i class="fa fa-book text">Chi tiết</i></a>
             </td>
           </tr>
         <?php } ?>  

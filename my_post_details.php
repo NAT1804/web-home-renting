@@ -3,35 +3,16 @@
     include_once "classes/comment.php";
 ?>
 <?php 
-    // if (!$_GET['detailPostId'] || $_GET['detailPostId'] == NULL) {
-    //     echo "<script>window.location = 'index.php'</script>";
-    // } else {
-    //     $id = $_GET['detailPostId'];
-    // }
-    $cm = new Comment();
     $post = new Post();
-    $fm = new Format();
-    $id = $_GET['detailPostId'];  
-    Session::set('details', $id);
-    $getPostById = $post->getPostById(Session::get('details'));
-    $postId = $getPostById[0]['post_id'];
-    $getCommentsOfPost = $cm->getCommentsOfPost($postId);
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
-        $userId = Session::get('userId');
-        if ($userId == false) {
-            $info = "<span id='success'>Bạn cần đăng nhập để thêm bình luận</span>";
-            Session::set('info-user', $info);
-            header('Location: login.php');
-            exit();
-        } else {
-            $accId = Session::get('userId');
-            $comment = $_POST['comment'];
-            $rating = $_POST['rating'];
-            $addComment = $cm->addComment($postId, $accId, $comment, $rating);
-        }
+    if (!$_GET['detailPostId'] || !$_GET['detailAccId']) {
+        echo "<script>window.location = 'activepostslist.php'</script>";
+    } else {
+        $id = $_GET['detailPostId'];
     }
-    
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+        $updatePost = $post->updatePost($_POST, $_FILES, $id);
+    }
+    $getPostById = $post->getPostById($id);
 ?>
 <br>
 <div class="inner-banner-w3ls py-5" id="home">
@@ -113,7 +94,7 @@
                                 <tr>
                                     <td style="font-weight: bold;">Mô tả thêm</td>
                                     <td colspan="3"><textarea rows="7" style="height:100%; width: 100%;" disabled><?php echo $getPostById[0]['post_description']; ?></textarea></td>
-                                </tr>
+                                </tr>                               
                             </tbody>
                         </table>
                     </div>
@@ -122,48 +103,7 @@
                         <hr>
                     </div>
 
-                    <div class="card my-4">
-                        <h5 class="card-header">Đánh giá:</h5>
-                        <?php  
-                            if (isset($addComment)) echo $addComment;
-                        ?>
-                        <div class="card-body">
-                            <form action="" method="post">
-                                <fieldset class="form-group" data-role="control-group">
-                                    <input type="radio" id="star1" name="rating" value="1" checked>
-                                    <label class="col-form-label" for="star1">1* </label>
-                                    <input type="radio" id="star2" name="rating" value="2">
-                                    <label class="col-form-label" for="star2">2* </label>
-                                    <input type="radio" id="star3" name="rating" value="3">
-                                    <label class="col-form-label" for="star3">3* </label>
-                                    <input type="radio" id="star4" name="rating" value="4">
-                                    <label class="col-form-label" for="star4">4* </label>
-                                    <input type="radio" id="star5" name="rating" value="5">
-                                    <label class="col-form-label" for="star5">5* </label><br>
-                                </fieldset>
-                                <div class="form-group">
-                                    <textarea placeholder="Thêm bình luận" class="form-control" name="comment" rows="3"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary" name="submit">Gửi</button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="comment-box">
-                        <!--Comment box -->
-                        <?php 
-                            for ($i=0; $i<count($getCommentsOfPost); $i++) {
-                        ?>
-                        <div class="media mb-4">
-                            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                            <div class="media-body">
-                                <h5 class="mt-0"><?php echo $getCommentsOfPost[$i]['username']; ?></h5>
-                                <p><?php echo $getCommentsOfPost[$i]['rating']." sao"; ?></p>
-                                <p><?php echo $getCommentsOfPost[$i]['comment'] ?></p>
-                            </div>
-                        </div>
-                        <?php } ?>
-                        <!-- //Comment box -->
-                    </div>
+                    
                 </div>
             </div>
         </div>

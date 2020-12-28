@@ -93,11 +93,16 @@
                                     <li>
                                         <p class="red">Bạn có <?php echo count($showNotificationsUser); ?> thông báo</p>
                                     </li>
-                                    <?php for ($i=0; $i<count($showNotificationsUser); $i++) { ?>
+                                    <?php for ($i=0; $i<5; $i++) { ?>
                                     <li>
                                         <a href="<?php 
                                             if (!empty($showNotificationsUser[$i]['post_id'])) {
-                                                echo "post_detail.php?detailPostId=".$showNotificationsUser[$i]['post_id'];
+                                                if ($showNotificationsUser[$i]['type'] == "P") {
+                                                    echo "my_post_details.php?detailPostId=".$showNotificationsUser[$i]['post_id']."&detailAccId=".$showNotificationsUser[$i]['account_id'];
+                                                }
+                                                if ($showNotificationsUser[$i]['type'] == "C") {
+                                                    echo "post_detail.php?detailPostId=".$showNotificationsUser[$i]['post_id']."&detailAccId=".$showNotificationsUser[$i]['account_id'];
+                                                }
                                             }
                                          ?>">
                                             <span class="message">
@@ -109,9 +114,9 @@
                                         </a>
                                     </li>
                                     <?php } ?>
-                                    <li>
+                                    <!-- <li>
                                         <a href="inbox.php">Xem tất cả thông báo</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
 

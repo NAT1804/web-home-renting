@@ -12,6 +12,9 @@
     if (isset($_GET['delPostId']) && $_GET['delPostId'] != "") {
         $delPost = $post->delPost($_GET['delPostId']);
     }
+    if (isset($_GET['restorePostId']) && $_GET['restoreAccId'] != "") {
+        $adminRestorePost = $post->adminRestorePost($_GET['restoreAccId'], $_GET['restorePostId']);
+    }
 ?>
 <!--main content start-->
 <section id="main-content">
@@ -34,6 +37,7 @@
       <div class="col-sm-4">
         <?php if(isset($acceptPost)) echo $acceptPost; ?>
         <?php if(isset($delPost)) echo $delPost; ?>
+        <?php if(isset($adminRestorePost)) echo $adminRestorePost; ?>
       </div>
       <div class="col-sm-3">
         <div class="input-group">
@@ -80,8 +84,9 @@
             <td><span><?php echo $showPostsRemoved[$i]['expiry_date']; ?></span></td>
             <td><span><?php echo $showPostsRemoved[$i]['post_price']; ?></span></td>
             <td>
-              <a onclick="return confirm('Bạn chắc chắn muốn bài viết hoạt động trở lại?')" href="?accPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>&accAccId=<?php echo $showPostsRemoved[$i]['account_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')" href="?delPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text"></i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn bài viết hoạt động trở lại?')" href="?restorePostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>&restoreAccId=<?php echo $showPostsRemoved[$i]['account_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-check text-success text-active">Phục hồi</i></a>
+              <a onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')" href="?delPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-times text-danger text">Xóa</i></a>
+              <a href="editpost.php?editPostId=<?php echo $showPostsRemoved[$i]['post_id'] ?>" class="active" ui-toggle-class=""><i class="fa fa-book text">Chi tiết</i></a>
             </td>
           </tr>
         <?php } ?>  

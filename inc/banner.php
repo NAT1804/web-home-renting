@@ -56,6 +56,29 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-lg-4">                                
+                                <div class="form-group">
+                                    <select class="form-control" name="price">
+                                        <option value="">Chọn mức giá</option>
+                                        <option <?php if(isset($_POST['price']) && $_POST['price'] == 1) { ?> selected <?php } ?> value="1">Dưới 1 triệu</option>
+                                        <option <?php if(isset($_POST['price']) && $_POST['price'] == 2) { ?> selected <?php } ?> value="2">1 triệu - 2 triệu</option>
+                                        <option <?php if(isset($_POST['price']) && $_POST['price'] == 3) { ?> selected <?php } ?> value="3">2 triệu - 3 triệu</option>
+                                        <option <?php if(isset($_POST['price']) && $_POST['price'] == 4) { ?> selected <?php } ?> value="4">3 triệu - 4 triệu</option>
+                                        <option <?php if(isset($_POST['price']) && $_POST['price'] == 5) { ?> selected <?php } ?> value="5">Trên 4 triệu</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">                                
+                                <div class="form-group">
+                                    <select class="form-control" name="area">
+                                        <option value="">Chọn diện tích</option>                                    
+                                        <option <?php if(isset($_POST['price']) && $_POST['area'] == 1) { ?> selected <?php } ?> value="1">Dưới 20 m2</option>                                    
+                                        <option <?php if(isset($_POST['price']) && $_POST['area'] == 2) { ?> selected <?php } ?> value="2">20 m2 đến 30 m2</option>                                    
+                                        <option <?php if(isset($_POST['price']) && $_POST['area'] == 3) { ?> selected <?php } ?> value="3">30 m2 đến 50 m2</option>                                    
+                                        <option <?php if(isset($_POST['price']) && $_POST['area'] == 4) { ?> selected <?php } ?> value="4">Trên 50 m2</option>                                    
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <button type="submit" class="btn btn_apt" name="submit">Tìm kiếm</button>
                     </form>
